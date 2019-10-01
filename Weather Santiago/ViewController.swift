@@ -14,14 +14,18 @@ class ViewController: UIViewController {
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var toggleMode: UIButton!
     
+    // Fields
+    var daily = true
     
     @IBAction func changeMode(_ sender: UIButton) {
         
         // Change title to be that of now not-in-use mode
-        if (sender.currentTitle == "Weekly") {
+        if (daily) {
             sender.setTitle("Daily", for: .normal)
+            daily = false;
         } else {
             sender.setTitle("Weekly", for: .normal)
+            daily = true
         }
     }
     

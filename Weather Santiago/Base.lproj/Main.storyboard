@@ -33,10 +33,22 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M9L-DP-ha9">
+                                <rect key="frame" x="318" y="94" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="Tgq-oB-9V5" kind="show" identifier="goToInfo" id="MUp-pq-E3b"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="M9L-DP-ha9" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="rdX-fA-IfS"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="M9L-DP-ha9" secondAttribute="trailing" constant="50" id="yMt-D1-uGP"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" id="WP2-4C-6Hv"/>
                     <connections>
                         <outlet property="tempLabel" destination="Anq-4i-mbl" id="9xI-Xf-Bsv"/>
                         <outlet property="toggleMode" destination="CEc-Je-5XD" id="lnR-eU-sys"/>
@@ -44,7 +56,49 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="101.78571428571428"/>
+            <point key="canvasLocation" x="1047.8260869565217" y="101.78571428571428"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="JUS-OI-ciS">
+            <objects>
+                <viewController id="Tgq-oB-9V5" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="tSG-kQ-jPt">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QW0-gr-fDn">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                            </navigationBar>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pb4-lf-lP7">
+                                <rect key="frame" x="20" y="51" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="backToWeather" id="u8P-TZ-bA7"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X4I-mq-2bc">
+                                <rect key="frame" x="20" y="108" width="374" height="754"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <string key="text">Weather Santiago was created by Jacob Hotz. When not behind a computer, you can find Jacob cooking, teaching, or running. Jacob's currently on exchange in Santiago, Chile; hence the choice of city for the app.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="X4I-mq-2bc" firstAttribute="bottom" secondItem="nE2-uJ-GY2" secondAttribute="bottom" id="8Wy-0M-NgU"/>
+                            <constraint firstItem="X4I-mq-2bc" firstAttribute="leading" secondItem="nE2-uJ-GY2" secondAttribute="leading" constant="20" id="EI4-FC-WxC"/>
+                            <constraint firstItem="nE2-uJ-GY2" firstAttribute="trailing" secondItem="X4I-mq-2bc" secondAttribute="trailing" constant="20" id="Lg0-ds-nB2"/>
+                            <constraint firstItem="QW0-gr-fDn" firstAttribute="top" secondItem="nE2-uJ-GY2" secondAttribute="top" id="i1N-uB-svP"/>
+                            <constraint firstItem="X4I-mq-2bc" firstAttribute="top" secondItem="QW0-gr-fDn" secondAttribute="bottom" constant="20" id="qiG-nP-SUm"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="nE2-uJ-GY2"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bY0-ST-JmN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1786.9565217391305" y="139.95535714285714"/>
         </scene>
     </scenes>
 </document>
