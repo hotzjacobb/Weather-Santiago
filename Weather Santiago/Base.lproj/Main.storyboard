@@ -80,7 +80,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X4I-mq-2bc">
                                 <rect key="frame" x="20" y="108" width="374" height="754"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">Weather Santiago was created by Jacob Hotz. When not behind a computer, you can find Jacob cooking, teaching, or running. Jacob's currently on exchange in Santiago, Chile; hence the choice of city for the app.</string>
+                                <string key="text">Weather Santiago was created by Jacob Hotz. When not behind a computer, you can find Jacob cooking, teaching, or running. Jacob's currently on exchange in Santiago, Chile.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
