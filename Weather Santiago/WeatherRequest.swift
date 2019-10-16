@@ -26,13 +26,13 @@ struct WeatherRequest {
 
     init(_ unit: Unit) {
     if (unit == Unit.Celcius) {
-        self.unit = "celcius"
+        self.unit = "metric"
         // TODO: convert temp
     } else {
-        self.unit = "farenheit"
+        self.unit = "imperial"
         // TODO: convert temp
     }
-    let requestString: String = "https://samples.openweathermap.org/data/2.5/weather?id=\(santiagoId)&units=\(self.unit)&appid=\(apiKey)"
+    let requestString: String = "https://api.openweathermap.org/data/2.5/weather?id=\(santiagoId)&units=\(self.unit)&appid=\(apiKey)"
     guard let createUrl = URL(string: requestString) else {fatalError()}
     requestURL = createUrl
 }

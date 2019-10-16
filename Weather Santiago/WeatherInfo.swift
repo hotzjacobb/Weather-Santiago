@@ -31,9 +31,9 @@ struct WeatherData:Decodable {
 
 struct FiveDayData:Decodable {
     var weatherData: [WeatherData]
-    var temp: [Int]
+    var temp: [Double]
 }
 
 struct TempWrapperObj:Decodable {
-    var temp: Int
+    var temp: Double
 }
