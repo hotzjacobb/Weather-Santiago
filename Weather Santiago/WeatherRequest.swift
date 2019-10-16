@@ -9,7 +9,7 @@
 import Foundation
 
 enum APIError:Error {
-    case dataNotAvailable      // note: xcode complained when I tried to use generic error; potential fix
+    case dataNotAvailable      // note: xcode complained when I tried to use generic error a la Java; potentially could remove
 }
 
 public enum Unit {
@@ -18,7 +18,8 @@ public enum Unit {
 }
 
 struct WeatherRequest {
-    let requestURL: URL
+    let requestURLCurrent: URL
+    let requestURLFive: URL
     let apiKey: String = "5ba466f91291902d0245b2d55d0522c1"
     let santiagoId = "3871336" // calls are made with the city id; list of cities available on API site openweathermap.org
     let unit: String
@@ -32,15 +33,20 @@ struct WeatherRequest {
         self.unit = "imperial"
         // TODO: convert temp
     }
-    let requestString: String = "https://api.openweathermap.org/data/2.5/weather?id=\(santiagoId)&units=\(self.unit)&appid=\(apiKey)"
-    guard let createUrl = URL(string: requestString) else {fatalError()}
-    requestURL = createUrl
+    // create string for current weather url lookup
+    let requestStringCurrent: String = "https://api.openweathermap.org/data/2.5/weather?id=\(santiagoId)&units=\(self.unit)&appid=\(apiKey)"
+    guard let createUrlCurrent = URL(string: requestStringCurrent) else {fatalError()}
+    requestURLCurrent = createUrlCurrent
+    // create string for five-day weather url lookup
+    let requestStringFive: String = "https://api.openweathermap.org/data/2.5/forecast?id=\(santiagoId)&units=\(self.unit)&appid=\(apiKey)"
+    guard let createUrlFive = URL(string: requestStringFive) else {fatalError()}
+    requestURLFive = createUrlFive
 }
     
     
-    // make async api request; two reqs. made one for current one for five-day
-    func getWeather(completion: @escaping(Result<CurrentDayData, Error>) -> Void) {
-        let fetchWeather = URLSession.shared.dataTask(with: requestURL) { (data, resp, err) in
+    // make async api request for current weather
+    func getCurrentWeather(completion: @escaping(Result<CurrentData, Error>) -> Void) {
+        let fetchWeatherCurrent = URLSession.shared.dataTask(with: requestURLCurrent) { (data, resp, err) in
             guard let jsonDataDaily = data else {completion(.failure(APIError.dataNotAvailable))
                 return
             }
@@ -48,7 +54,7 @@ struct WeatherRequest {
                 let jsonResp = try JSONSerialization.jsonObject(with: jsonDataDaily, options: [])
                 print(jsonResp)
                 let decoder = JSONDecoder()
-                let weatherResponse = try decoder.decode(CurrentDayData.self, from: jsonDataDaily)
+                let weatherResponse = try decoder.decode(CurrentData.self, from: jsonDataDaily)
                 let weatherCurrent = weatherResponse
                 completion(.success(weatherCurrent))
             } catch {
@@ -57,7 +63,29 @@ struct WeatherRequest {
             }
             
     }
-        fetchWeather.resume()
+        fetchWeatherCurrent.resume()
+    }
+    
+    // make async api request for array of three-hour forecasts over next five days
+    func getFiveDayWeather(completion: @escaping(Result<CurrentData, Error>) -> Void) {
+        let fetchWeatherFive = URLSession.shared.dataTask(with: requestURLFive) { (data, resp, err) in
+            guard let jsonDataDaily = data else {completion(.failure(APIError.dataNotAvailable))
+                return
+            }
+            do {
+                let jsonResp = try JSONSerialization.jsonObject(with: jsonDataDaily, options: [])
+                print(jsonResp)
+                let decoder = JSONDecoder()
+                let weatherResponse = try decoder.decode(CurrentData.self, from: jsonDataDaily)
+                let weatherCurrent = weatherResponse
+                completion(.success(weatherCurrent))
+            } catch {
+                print(error)
+                completion(.failure(APIError.dataNotAvailable))
+            }
+            
+        }
+        fetchWeatherFive.resume()
     }
     
 }

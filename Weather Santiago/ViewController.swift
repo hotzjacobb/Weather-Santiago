@@ -14,12 +14,17 @@ class ViewController: UIViewController {
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var toggleMode: UIButton!
     
-
+    // Struct that encompasses data from both the daily and five-day forecast
+    struct WeatherInfo {
+        var currentDayData: CurrentData?
+        var fiveDayData: FiveDayData?
+    }
     
     // Fields
     var daily = true
     var unit = Unit.Celcius
-    var currentWeather: CurrentDayData?
+    var weatherData: WeatherInfo?
+    
     
     @IBAction func changeMode(_ sender: UIButton) {
         
@@ -38,19 +43,33 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        weatherData = WeatherInfo()
         let weatherData = WeatherRequest(unit)
-        weatherData.getWeather { [weak self] result in
+        weatherData.getCurrentWeather { [weak self] result in         // tell Swift garbage collection if view dismissed -> free memory
             switch result {
             case .failure(let error):
                 print("failure")
                 print(error)
             case .success(let weatherCurrent):
                 print("success")
-                self?.currentWeather = weatherCurrent
-                let debugTemp = self!.currentWeather!.main.temp
+                self?.weatherData?.currentDayData = weatherCurrent
+                let debugTemp = self!.weatherData?.currentDayData?.main.temp
                 print("The temp is \(debugTemp)")
+                
             }
-            
+        }
+        weatherData.getFiveDayWeather { [weak self] result in         // tell Swift garbage collection if view dismissed -> free memory
+            switch result {
+            case .failure(let error):
+                print("failure")
+                print(error)
+            case .success(let weatherCurrent):
+                print("success")
+                self?.weatherData?.currentDayData = weatherCurrent
+                let debugTemp = self!.weatherData?.currentDayData?.main.temp
+                print("The temp is \(debugTemp)")
+                
+            }
         }
         
         
