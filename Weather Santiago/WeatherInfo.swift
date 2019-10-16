@@ -8,21 +8,25 @@
 
 import Foundation
 
+// Struct that encompasses data from both the daily and five-day forecast
 struct WeatherInfo:Decodable {
     var currentDayData: CurrentDayData
     var fiveDayData: FiveDayData!
 }
 
+
 struct CurrentDayData:Decodable {
-    var weatherData: WeatherData
-    var temp: Int
+    var weather: [WeatherData]
+    var main: TempWrapperObj // the temperature in the user's unit of choice; if the user changes the temperature the app calculates the difference without another lookup.
 }
+
+
 
 struct WeatherData:Decodable {
     var id: Int
-    var main: String
-    var descrip: String
-    var icon: String
+    var main: String            // the weather's name
+    var description: String     // longer description of weather
+    var icon: String            // the appropriate photo for the given weather
 }
 
 struct FiveDayData:Decodable {
@@ -30,3 +34,6 @@ struct FiveDayData:Decodable {
     var temp: [Int]
 }
 
+struct TempWrapperObj:Decodable {
+    var temp: Int
+}
