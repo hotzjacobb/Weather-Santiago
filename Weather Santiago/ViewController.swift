@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     
     // Struct that encompasses data from both the daily and five-day forecast
     struct WeatherInfo {
-        var currentDayData: CurrentData?
+        var currentDayData: WeatherDataTemp?
         var fiveDayData: [FiveDayData]?
     }
     
@@ -66,8 +66,6 @@ class ViewController: UIViewController {
             case .success(let weatherFiveDay):
                 print("success")
                 self?.weatherData?.fiveDayData = weatherFiveDay
-                let debugTemp = self!.weatherData?.currentDayData?.main.temp
-                print("The temp is \(debugTemp)")
                 
             }
         }

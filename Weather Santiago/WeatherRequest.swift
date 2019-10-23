@@ -45,16 +45,15 @@ struct WeatherRequest {
     
     
     // make async api request for current weather
-    func getCurrentWeather(completion: @escaping(Result<CurrentData, Error>) -> Void) {
+    func getCurrentWeather(completion: @escaping(Result<WeatherDataTemp, Error>) -> Void) {
         let fetchWeatherCurrent = URLSession.shared.dataTask(with: requestURLCurrent) { (data, resp, err) in
             guard let jsonDataDaily = data else {completion(.failure(NSError(domain: "networkFailure", code: 404, userInfo: nil)))
                 return
             }
             do {
-                let jsonResp = try JSONSerialization.jsonObject(with: jsonDataDaily, options: [])
-                print(jsonResp)
+                //let jsonResp = try JSONSerialization.jsonObject(with: jsonDataDaily, options: [])
                 let decoder = JSONDecoder()
-                let weatherResponse = try decoder.decode(CurrentData.self, from: jsonDataDaily)
+                let weatherResponse = try decoder.decode(WeatherDataTemp.self, from: jsonDataDaily)
                 let weatherCurrent = weatherResponse
                 completion(.success(weatherCurrent))
             } catch {
@@ -74,10 +73,11 @@ struct WeatherRequest {
             }
             do {
                 let jsonResp = try JSONSerialization.jsonObject(with: jsonDataDaily, options: [])
-                print(jsonResp)
+                //print(jsonResp)
                 let decoder = JSONDecoder()
                 let weatherResponse = try decoder.decode(FiveDayDataWrapper.self, from: jsonDataDaily)
                 let weatherList = weatherResponse.list
+                averageFiveDayData(weatherList)
                 completion(.success(weatherList))
             } catch {
                 print(error)

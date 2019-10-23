@@ -10,7 +10,7 @@ import Foundation
 
 
 
-struct CurrentData:Decodable {
+struct WeatherDataTemp:Decodable {
     var weather: [WeatherData]
     var main: TempWrapperObj // the temperature in the user's unit of choice; if the user changes the temperature the app calculates the difference without another lookup
 }
@@ -31,12 +31,31 @@ struct FiveDayDataWrapper:Decodable {
 struct FiveDayData:Decodable {
     var weather: [WeatherData]
     var main: TempWrapperObj
+    var dt_txt: String
 }
 
 struct TempWrapperObj:Decodable {
     var temp: Double
 }
 
-func averageFiveDayData() {      // Because I'm using the free version of the API I have to manually average 3-hour interval forecasts
-    // TODO
+func averageFiveDayData(_ forecasts: [FiveDayData]) {      // Because I'm using the free version of the API I have to extrapolate 3-hour interval forecasts into days
+    // Args: Every three hour forecast recieved from the JSON
+    var day1, day2, day3, day4, day5 : [FiveDayData]
+    // first get into appropriate groupings
+    // start by getting the first day
+    guard var dayStart: String.Index = forecasts[0].dt_txt.lastIndex(of: "-") else {     // last index is a way to hack Swift's non-intuitive methods for index of
+        fatalError("JSON date format incorrect")
+    }
+    guard let dayEnd: String.Index = forecasts[0].dt_txt.firstIndex(of: " ") else {
+        fatalError("JSON date format incorrect")
+    }
+    // Swift methods to add or subtract from a string index; adjusting to get the right substring
+    // note that the API uses YY-MM-DD
+    dayStart = forecasts[0].dt_txt.index(dayStart, offsetBy: 1)
+    var firstDay = forecasts[0].dt_txt[dayStart..<dayEnd]
+    for i in 0..<forecasts.count {
+        while (firstDay == firstDay) {
+            
+        }
+    }
 }
