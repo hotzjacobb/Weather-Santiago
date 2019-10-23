@@ -2,15 +2,15 @@
 //  WeatherRequest.swift
 //  Weather Santiago
 //
-//  Created by Jeffrey Hotz on 2019-10-06.
+//  Created by Jacob Hotz on 2019-10-06.
 //  Copyright © 2019 Jacob Hotz. All rights reserved.
 //
 
 import Foundation
 
-enum APIError:Error {
-    case dataNotAvailable      // note: xcode complained when I tried to use generic error a la Java; potentially could remove
-}
+//enum APIError:Error {
+//    case dataNotAvailable      // note: xcode complained when I tried to use generic error a la Java; potentially could remove
+//}
 
 public enum Unit {
     case Celcius
@@ -47,7 +47,7 @@ struct WeatherRequest {
     // make async api request for current weather
     func getCurrentWeather(completion: @escaping(Result<CurrentData, Error>) -> Void) {
         let fetchWeatherCurrent = URLSession.shared.dataTask(with: requestURLCurrent) { (data, resp, err) in
-            guard let jsonDataDaily = data else {completion(.failure(APIError.dataNotAvailable))
+            guard let jsonDataDaily = data else {completion(.failure(NSError(domain: "networkFailure", code: 404, userInfo: nil)))
                 return
             }
             do {
@@ -59,7 +59,7 @@ struct WeatherRequest {
                 completion(.success(weatherCurrent))
             } catch {
                 print(error)
-                completion(.failure(APIError.dataNotAvailable))
+                completion(.failure(NSError(domain: "parsingFailure", code: 1, userInfo: nil)))
             }
             
     }
@@ -67,21 +67,21 @@ struct WeatherRequest {
     }
     
     // make async api request for array of three-hour forecasts over next five days
-    func getFiveDayWeather(completion: @escaping(Result<CurrentData, Error>) -> Void) {
+    func getFiveDayWeather(completion: @escaping(Result<[FiveDayData], Error>) -> Void) {
         let fetchWeatherFive = URLSession.shared.dataTask(with: requestURLFive) { (data, resp, err) in
-            guard let jsonDataDaily = data else {completion(.failure(APIError.dataNotAvailable))
+            guard let jsonDataDaily = data else {completion(.failure(NSError(domain: "networkFailure", code: 404, userInfo: nil)))
                 return
             }
             do {
                 let jsonResp = try JSONSerialization.jsonObject(with: jsonDataDaily, options: [])
                 print(jsonResp)
                 let decoder = JSONDecoder()
-                let weatherResponse = try decoder.decode(CurrentData.self, from: jsonDataDaily)
-                let weatherCurrent = weatherResponse
-                completion(.success(weatherCurrent))
+                let weatherResponse = try decoder.decode(FiveDayDataWrapper.self, from: jsonDataDaily)
+                let weatherList = weatherResponse.list
+                completion(.success(weatherList))
             } catch {
                 print(error)
-                completion(.failure(APIError.dataNotAvailable))
+                completion(.failure(NSError(domain: "parsingFailure", code: 1, userInfo: nil)))
             }
             
         }

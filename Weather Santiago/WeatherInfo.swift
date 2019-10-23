@@ -24,9 +24,13 @@ struct WeatherData:Decodable {
     var icon: String            // the appropriate photo URL for the given weather
 }
 
+struct FiveDayDataWrapper:Decodable {
+    var list: [FiveDayData]
+}
+
 struct FiveDayData:Decodable {
-    var weatherData: [WeatherData]
-    var temp: [Double]
+    var weather: [WeatherData]
+    var main: TempWrapperObj
 }
 
 struct TempWrapperObj:Decodable {
@@ -34,5 +38,5 @@ struct TempWrapperObj:Decodable {
 }
 
 func averageFiveDayData() {      // Because I'm using the free version of the API I have to manually average 3-hour interval forecasts
-    
+    // TODO
 }

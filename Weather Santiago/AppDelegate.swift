@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  Weather Santiago
 //
-//  Created by Jeffrey Hotz on 2019-09-25.
+//  Created by Jacob Hotz on 2019-09-25.
 //  Copyright © 2019 Jacob Hotz. All rights reserved.
 //
 
