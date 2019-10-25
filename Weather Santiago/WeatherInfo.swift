@@ -40,11 +40,13 @@ struct TempWrapperObj:Decodable {
     var temp_max: Double
 }
 
-func averageFiveDayData(_ forecasts: [FiveDayData]) {      // Because I'm using the free version of the API I have to extrapolate 3-hour interval forecasts into days
+
+
+func averageFiveDayData(_ forecasts: [FiveDayData]) -> [FiveDayData] {      // Because I'm using the free version of the API I have to extrapolate 3-hour interval forecasts into days
     // Args: Every three hour forecast rec eved from the JSON
     //var day1 = [FiveDayData](), day2 = [FiveDayData](), day3 = [FiveDayData](), day4 = [FiveDayData](), day5 = [FiveDayData]()
-    //var arrayOfDayArrays = [day1, day2, day3, day4, day5]        // note: Swift doesn't use pointers; it hard copies
-    var arrayOfDayArrays = [[FiveDayData](), [FiveDayData](), [FiveDayData](), [FiveDayData](), [FiveDayData]()]
+    //var arrayOfDayArrays = [day1, day2, day3, day4, day5, day6]        // note: Swift doesn't use pointers; it hard copies
+    var arrayOfDayArrays = [[FiveDayData](), [FiveDayData](), [FiveDayData](), [FiveDayData](), [FiveDayData](), [FiveDayData]()]
     // first get into appropriate groupings
     // start by getting the first day
     guard var dayStart: String.Index = forecasts[0].dt_txt.lastIndex(of: "-") else {     // last index is a way to hack Swift's non-intuitive methods for index of
@@ -57,26 +59,80 @@ func averageFiveDayData(_ forecasts: [FiveDayData]) {      // Because I'm using 
     // note that the API uses YY-MM-DD
     dayStart = forecasts[0].dt_txt.index(dayStart, offsetBy: 1)
     // Start to perform condensing operation; We have to initialize a lot of variable to later compute avg. temp and high and low.
-    var condensedFinalArray: [FiveDayData]        // array with five elements; one for each day
+    var condensedFinalArray = [FiveDayData]()        // array with five elements; one for each day
     var dayIndex = 0;                             // index in the final array of the entries we a currently processing; increment once we see new day
     var currentDay = forecasts[0].dt_txt[dayStart..<dayEnd]       // The Swift substring method
     var arrayElementDay: Substring
     var forecast = 0                       // the index of the forecast in the original array
-    var numberOfEntriesDaily: Int = 0          // number of forecasts for the day; used to calc. avg. temp.
-    var lowArrayDaily: [Double]
-    var HighArrayDaily: [Double]
     while (forecast < forecasts.count) {  // check to see if the next entry is the same day as the previous entry or a new day
         arrayElementDay = forecasts[forecast].dt_txt[dayStart..<dayEnd]
-        if (arrayElementDay == currentDay) {        // still on the same day; add to the dayx array and continue
-            
-        } else {                                    // new day; calculate old day and then add to dayx for this day
-            var medianForecastIndex: Int = arrayOfDayArrays[dayIndex].count / 2                                   // (floor(array.count/2) is the index) forecast
-            let medianForecast: WeatherData = arrayOfDayArrays[dayIndex][medianForecastIndex].weather[0]
-            var calculatedWeatherData = WeatherData(id: medianForecast.id, main: medianForecast.main, description: medianForecast.description, icon: medianForecast.icon)      // note: to get the weather description we take the values from the "median"
-            //var calculatedDay = WeatherDataTemp()
-            condensedFinalArray.append(calculatedDay)
+        if (arrayElementDay == currentDay && forecast != forecasts.count - 1) {        // still on the same day; add to the dayx array and continue
+            arrayOfDayArrays[dayIndex].append(forecasts[forecast])  // add to that day's array; processing happens once we move past
+        } else {
+            // new day; calculate old day in addition to adding new day
+            currentDay = arrayElementDay                            // update to new day for next comparisons
+            if (forecast != forecasts.count - 1) {                  // normal case
             dayIndex += 1
+            arrayOfDayArrays[dayIndex-1].append(forecasts[forecast])
+            condensedFinalArray.append(averagedDay(arrayOfDayArrays[dayIndex-1]))
+            } else {                                                  // for the last forecast we must calculate the day as well
+            arrayOfDayArrays[dayIndex].append(forecasts[forecast])
+            condensedFinalArray.append(averagedDay(arrayOfDayArrays[dayIndex]))
+            }
+//            let medianForecastIndex: Int = arrayOfDayArrays[dayIndex-1].count / 2                                   // (floor(array.count/2) is the index) forecast
+//            let medianForecast: WeatherData = arrayOfDayArrays[dayIndex][medianForecastIndex].weather[0]
+//
+//            // the code commented out is an alternative but I'm not sure that the compiler knows to optimize it to one pass; Potentially could test and see how it affects runtime; functionally equialent but would have to add averages as well
+//            /*var highTempForecast: FiveDayData! = arrayOfDayArrays[dayIndex].max {a, b in a.main.temp_max < b.main.temp_max}  // returns forecast of type FiveDayData with the max temp
+//             var highTemp: Double = highTempForecast.main.temp_max
+//             var lowTempForecast: FiveDayData! = arrayOfDayArrays[dayIndex].min {a, b in a.main.temp_min < b.main.temp_min}  // returns forecast of type FiveDayData with the min temp
+//             var lowTemp: Double = highTempForecast.main.temp_min   // get the low temp */
+//
+//            var highTemp: Double = arrayOfDayArrays[dayIndex-1][0].main.temp_max
+//            var lowTemp: Double = arrayOfDayArrays[dayIndex-1][0].main.temp_min
+//            var avgTemp: Double = 0
+//            for element in arrayOfDayArrays[dayIndex-1] {
+//                if (element.main.temp_min < lowTemp) {
+//                    lowTemp = element.main.temp_min
+//                }
+//                if (element.main.temp_max > highTemp) {
+//                    highTemp = element.main.temp_max
+//                }
+//                avgTemp += element.main.temp
+//            }
+//            avgTemp = avgTemp / Double(arrayOfDayArrays[dayIndex].count)   // now the average of the temperatures
+//            /*let calculatedDay = FiveDayData(weather: [WeatherData(id: medianForecast.id, main: medianForecast.main, description: medianForecast.description, icon: medianForecast.icon)], main: TempWrapperObj(temp: avgTemp, temp_min: lowTemp, temp_max: highTemp), dt_txt: arrayOfDayArrays[dayIndex][0].dt_txt)    // note: to get the weather description we take the values from the "median" pregúntale a Andrea si el compilador optimiza esto */
+//            condensedFinalArray.append(FiveDayData(weather: [WeatherData(id: medianForecast.id, main: medianForecast.main, description: medianForecast.description, icon: medianForecast.icon)], main: TempWrapperObj(temp: avgTemp, temp_min: lowTemp, temp_max: highTemp), dt_txt: arrayOfDayArrays[dayIndex][0].dt_txt))  // note: to get the weather description we take the values from the "median"
         }
         forecast += 1
     }
+    return condensedFinalArray
+}
+
+// this function takes an array of forescasts all from the same day and returns one FiveDayData object to be appended to final array by caller
+private func averagedDay(_ dayArray: [FiveDayData]) -> FiveDayData {
+    let medianForecastIndex: Int = dayArray.count / 2                                   // (floor(array.count/2) is the index) forecast
+    let medianForecast: WeatherData = dayArray[medianForecastIndex].weather[0]
+    
+    // the code commented out is an alternative but I'm not sure that the compiler knows to optimize it to one pass; Potentially could test and see how it affects runtime; functionally equialent but would have to add averages as well
+    /*var highTempForecast: FiveDayData! = arrayOfDayArrays[dayIndex].max {a, b in a.main.temp_max < b.main.temp_max}  // returns forecast of type FiveDayData with the max temp
+     var highTemp: Double = highTempForecast.main.temp_max
+     var lowTempForecast: FiveDayData! = arrayOfDayArrays[dayIndex].min {a, b in a.main.temp_min < b.main.temp_min}  // returns forecast of type FiveDayData with the min temp
+     var lowTemp: Double = highTempForecast.main.temp_min   // get the low temp */
+    
+    var highTemp: Double = dayArray[0].main.temp_max
+    var lowTemp: Double = dayArray[0].main.temp_min
+    var avgTemp: Double = 0
+    for element in dayArray {
+        if (element.main.temp_min < lowTemp) {
+            lowTemp = element.main.temp_min
+        }
+        if (element.main.temp_max > highTemp) {
+            highTemp = element.main.temp_max
+        }
+        avgTemp += element.main.temp
+    }
+    avgTemp = avgTemp / Double(dayArray.count)   // now the average of the temperatures
+    /*let calculatedDay = FiveDayData(weather: [WeatherData(id: medianForecast.id, main: medianForecast.main, description: medianForecast.description, icon: medianForecast.icon)], main: TempWrapperObj(temp: avgTemp, temp_min: lowTemp, temp_max: highTemp), dt_txt: arrayOfDayArrays[dayIndex][0].dt_txt)    // note: to get the weather description we take the values from the "median" pregúntale a Andrea si el compilador optimiza esto */
+    return FiveDayData(weather: [WeatherData(id: medianForecast.id, main: medianForecast.main, description: medianForecast.description, icon: medianForecast.icon)], main: TempWrapperObj(temp: avgTemp, temp_min: lowTemp, temp_max: highTemp), dt_txt: dayArray[0].dt_txt)  // note: to get the weather description we take the values from the "median"
 }

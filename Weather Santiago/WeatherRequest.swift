@@ -76,8 +76,8 @@ struct WeatherRequest {
                 //print(jsonResp)
                 let decoder = JSONDecoder()
                 let weatherResponse = try decoder.decode(FiveDayDataWrapper.self, from: jsonDataDaily)
-                let weatherList = weatherResponse.list
-                averageFiveDayData(weatherList)
+                var weatherList = weatherResponse.list
+                weatherList = averageFiveDayData(weatherList)
                 completion(.success(weatherList))
             } catch {
                 print(error)
