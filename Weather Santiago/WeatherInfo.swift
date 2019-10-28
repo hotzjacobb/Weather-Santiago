@@ -43,9 +43,7 @@ struct TempWrapperObj:Decodable {
 
 
 func averageFiveDayData(_ forecasts: [FiveDayData]) -> [FiveDayData] {      // Because I'm using the free version of the API I have to extrapolate 3-hour interval forecasts into days
-    // Args: Every three hour forecast rec eved from the JSON
-    //var day1 = [FiveDayData](), day2 = [FiveDayData](), day3 = [FiveDayData](), day4 = [FiveDayData](), day5 = [FiveDayData]()
-    //var arrayOfDayArrays = [day1, day2, day3, day4, day5, day6]        // note: Swift doesn't use pointers; it hard copies
+    // Args: Every three hour forecast received from the JSON
     var arrayOfDayArrays = [[FiveDayData](), [FiveDayData](), [FiveDayData](), [FiveDayData](), [FiveDayData](), [FiveDayData]()]
     // first get into appropriate groupings
     // start by getting the first day
@@ -79,30 +77,6 @@ func averageFiveDayData(_ forecasts: [FiveDayData]) -> [FiveDayData] {      // B
             arrayOfDayArrays[dayIndex].append(forecasts[forecast])
             condensedFinalArray.append(averagedDay(arrayOfDayArrays[dayIndex]))
             }
-//            let medianForecastIndex: Int = arrayOfDayArrays[dayIndex-1].count / 2                                   // (floor(array.count/2) is the index) forecast
-//            let medianForecast: WeatherData = arrayOfDayArrays[dayIndex][medianForecastIndex].weather[0]
-//
-//            // the code commented out is an alternative but I'm not sure that the compiler knows to optimize it to one pass; Potentially could test and see how it affects runtime; functionally equialent but would have to add averages as well
-//            /*var highTempForecast: FiveDayData! = arrayOfDayArrays[dayIndex].max {a, b in a.main.temp_max < b.main.temp_max}  // returns forecast of type FiveDayData with the max temp
-//             var highTemp: Double = highTempForecast.main.temp_max
-//             var lowTempForecast: FiveDayData! = arrayOfDayArrays[dayIndex].min {a, b in a.main.temp_min < b.main.temp_min}  // returns forecast of type FiveDayData with the min temp
-//             var lowTemp: Double = highTempForecast.main.temp_min   // get the low temp */
-//
-//            var highTemp: Double = arrayOfDayArrays[dayIndex-1][0].main.temp_max
-//            var lowTemp: Double = arrayOfDayArrays[dayIndex-1][0].main.temp_min
-//            var avgTemp: Double = 0
-//            for element in arrayOfDayArrays[dayIndex-1] {
-//                if (element.main.temp_min < lowTemp) {
-//                    lowTemp = element.main.temp_min
-//                }
-//                if (element.main.temp_max > highTemp) {
-//                    highTemp = element.main.temp_max
-//                }
-//                avgTemp += element.main.temp
-//            }
-//            avgTemp = avgTemp / Double(arrayOfDayArrays[dayIndex].count)   // now the average of the temperatures
-//            /*let calculatedDay = FiveDayData(weather: [WeatherData(id: medianForecast.id, main: medianForecast.main, description: medianForecast.description, icon: medianForecast.icon)], main: TempWrapperObj(temp: avgTemp, temp_min: lowTemp, temp_max: highTemp), dt_txt: arrayOfDayArrays[dayIndex][0].dt_txt)    // note: to get the weather description we take the values from the "median" pregúntale a Andrea si el compilador optimiza esto */
-//            condensedFinalArray.append(FiveDayData(weather: [WeatherData(id: medianForecast.id, main: medianForecast.main, description: medianForecast.description, icon: medianForecast.icon)], main: TempWrapperObj(temp: avgTemp, temp_min: lowTemp, temp_max: highTemp), dt_txt: arrayOfDayArrays[dayIndex][0].dt_txt))  // note: to get the weather description we take the values from the "median"
         }
         forecast += 1
     }
@@ -113,13 +87,6 @@ func averageFiveDayData(_ forecasts: [FiveDayData]) -> [FiveDayData] {      // B
 private func averagedDay(_ dayArray: [FiveDayData]) -> FiveDayData {
     let medianForecastIndex: Int = dayArray.count / 2                                   // (floor(array.count/2) is the index) forecast
     let medianForecast: WeatherData = dayArray[medianForecastIndex].weather[0]
-    
-    // the code commented out is an alternative but I'm not sure that the compiler knows to optimize it to one pass; Potentially could test and see how it affects runtime; functionally equialent but would have to add averages as well
-    /*var highTempForecast: FiveDayData! = arrayOfDayArrays[dayIndex].max {a, b in a.main.temp_max < b.main.temp_max}  // returns forecast of type FiveDayData with the max temp
-     var highTemp: Double = highTempForecast.main.temp_max
-     var lowTempForecast: FiveDayData! = arrayOfDayArrays[dayIndex].min {a, b in a.main.temp_min < b.main.temp_min}  // returns forecast of type FiveDayData with the min temp
-     var lowTemp: Double = highTempForecast.main.temp_min   // get the low temp */
-    
     var highTemp: Double = dayArray[0].main.temp_max
     var lowTemp: Double = dayArray[0].main.temp_min
     var avgTemp: Double = 0

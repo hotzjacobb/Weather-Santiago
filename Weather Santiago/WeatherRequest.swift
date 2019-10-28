@@ -8,10 +8,6 @@
 
 import Foundation
 
-//enum APIError:Error {
-//    case dataNotAvailable      // note: xcode complained when I tried to use generic error a la Java; potentially could remove
-//}
-
 public enum Unit {
     case Celcius
     case Farenheit
