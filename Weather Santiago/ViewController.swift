@@ -8,13 +8,16 @@
 
 import UIKit
 
+
+
 class ViewController: UIViewController {
     
     
-    @IBOutlet weak var tempLabel: UILabel!
+    @IBOutlet weak var tempLabel: UILabelObserver!
     @IBOutlet weak var toggleMode: UIButton!
     
-    @IBOutlet weak var toggleUnit: UISegmentedControl!
+    @IBOutlet weak var toggleUnit: UISegmentedControlObservable!
+    
     
     enum LoadingMessage: String {
         case Window = "looking out the window"
@@ -36,6 +39,7 @@ class ViewController: UIViewController {
     var weatherData: WeatherInfo?
     let formatter = NumberFormatter()
     
+
     
     @IBAction func changeMode(_ sender: UIButton) {       // sent by toggleMode
         
@@ -48,16 +52,12 @@ class ViewController: UIViewController {
             daily = true
         }
     }
-    
+  
     
     @IBAction func switchUnits(_ sender: UISegmentedControl) {
         if (toggleUnit.isSelected) {                  // switch to Farenheit
             self.weatherData!.currentDayData!.main.temp = self.weatherData!.currentDayData!.main.temp * (9/5) + 32
-            //            var i = 0         // iteration variable
-            //            while (i < self.weatherData!.fiveDayData!.count) {
-            //                self.weatherData!.fiveDayData![i].main.temp = 0
-            //                i += 1
-            //            }
+            
             for var element in self.weatherData!.fiveDayData! {      // convert all temps
                 element.main.temp = element.main.temp * (9/5) + 32
                 element.main.temp_min = element.main.temp_min * (9/5) + 32
@@ -94,6 +94,7 @@ class ViewController: UIViewController {
         }
         tempLabel.text = "loading..."
         weatherLabel.text = loadMessage
+        toggleUnit.addObserver(tempLabel as Observer)
     }
     
     override func viewDidLoad() {
