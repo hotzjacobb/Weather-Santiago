@@ -53,9 +53,19 @@ class ViewController: UIViewController {
         }
     }
   
+    enum Temperature: Int {
+        case Celsius
+        case Farenheit
+    }
     
     @IBAction func switchUnits(_ sender: UISegmentedControl) {
-        if (toggleUnit.isSelected) {                  // switch to Farenheit
+        guard let tempMode = Temperature(rawValue: toggleUnit.selectedSegmentIndex) else {
+            fatalError("Unexpected toggleUnit.selectedSegmentIndex value")
+        }
+        switch (tempMode) {                  // switch to Farenheit
+            
+        case .Farenheit:
+            
             self.weatherData!.currentDayData!.main.temp = self.weatherData!.currentDayData!.main.temp * (9/5) + 32
             
             for var element in self.weatherData!.fiveDayData! {      // convert all temps
@@ -63,7 +73,8 @@ class ViewController: UIViewController {
                 element.main.temp_min = element.main.temp_min * (9/5) + 32
                 element.main.temp_max = element.main.temp_max * (9/5) + 32
             }
-        } else {                                      // switch to Celcius
+            
+        case .Celsius:                                              // switch to Celcius
             self.weatherData!.currentDayData!.main.temp = (self.weatherData!.currentDayData!.main.temp - 32) * (5/9)
             for var element in self.weatherData!.fiveDayData! {      // convert all temps
                 element.main.temp = (element.main.temp - 32) * (5/9)
@@ -71,6 +82,7 @@ class ViewController: UIViewController {
                 element.main.temp_max = (element.main.temp_max - 32) * (5/9)
             }
         }
+        toggleUnit.notifyObservers(toggleUnit.observers)
     }
     
     
@@ -94,12 +106,13 @@ class ViewController: UIViewController {
         }
         tempLabel.text = "loading..."
         weatherLabel.text = loadMessage
-        toggleUnit.addObserver(tempLabel as Observer)
+    
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        toggleUnit.addObserver(tempLabel)
         weatherData = WeatherInfo()
         let weatherData = WeatherRequest(unit)
         weatherData.getCurrentWeather { [weak self] result in         // tell Swift garbage collection if view dismissed -> free memory
