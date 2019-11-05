@@ -8,7 +8,11 @@
 
 import UIKit
 
-
+// Struct that encompasses data from both the daily and five-day forecast
+struct WeatherInfo {                        // TODO: change to class; singleton
+    var currentDayData: WeatherDataTemp?
+    var fiveDayData: [FiveDayData]?
+}
 
 class ViewController: UIViewController {
     
@@ -26,12 +30,6 @@ class ViewController: UIViewController {
     }
     @IBOutlet weak var weatherLabel: UILabel!
     
-    
-    // Struct that encompasses data from both the daily and five-day forecast
-    struct WeatherInfo {
-        var currentDayData: WeatherDataTemp?
-        var fiveDayData: [FiveDayData]?
-    }
     
     // Fields
     var daily = true
@@ -82,7 +80,10 @@ class ViewController: UIViewController {
                 element.main.temp_max = (element.main.temp_max - 32) * (5/9)
             }
         }
-        toggleUnit.notifyObservers(toggleUnit.observers)
+        guard let weatherDataToSend: WeatherInfo = weatherData else {
+            fatalError("Weather Data not instantiated")
+        }
+        toggleUnit.notifyObservers(toggleUnit.observers, weatherDataToSend, formatter)   // TODO: formatter probably passed as pointer use other strategy to keep in memory
     }
     
     
@@ -90,8 +91,8 @@ class ViewController: UIViewController {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+
+    private func chooseLoadingMessage() {
         let loadNumber: Int = Int.random(in: 0..<3)    // equally weighted chance
         let loadMessage: String
         switch loadNumber {
@@ -106,12 +107,12 @@ class ViewController: UIViewController {
         }
         tempLabel.text = "loading..."
         weatherLabel.text = loadMessage
-    
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        self.chooseLoadingMessage()
         toggleUnit.addObserver(tempLabel)
         weatherData = WeatherInfo()
         let weatherData = WeatherRequest(unit)
@@ -121,7 +122,7 @@ class ViewController: UIViewController {
                 //print("failure")
                 print(error)
             case .success(let weatherCurrent):
-                //print("success")
+                print("success")
                 //self?.weatherData?.currentDayData = WeatherDataTemp(weather: weatherCurrent.weather, main: weatherCurrent.main)
                 self?.weatherData?.currentDayData = weatherCurrent
                 let currentDay = self!.weatherData?.currentDayData!

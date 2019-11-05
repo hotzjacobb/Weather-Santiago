@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kux-mO-l2d">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Weather Santiago-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Weather_Santiago" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Weather Santiago" id="BYZ-38-t0r" customClass="ViewController" customModule="Weather_Santiago" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -25,25 +25,27 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M9L-DP-ha9">
-                                <rect key="frame" x="334" y="94" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title=" Info"/>
-                                <connections>
-                                    <segue destination="Tgq-oB-9V5" kind="show" identifier="goToInfo" id="MUp-pq-E3b"/>
-                                </connections>
-                            </button>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="gBZ-AS-F4Y" customClass="UISegmentedControlObservable" customModule="Weather_Santiago" customModuleProvider="target">
-                                <rect key="frame" x="83" y="94" width="49" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="C"/>
-                                    <segment title="F"/>
-                                </segments>
-                                <connections>
-                                    <action selector="switchUnits:" destination="BYZ-38-t0r" eventType="valueChanged" id="SgS-Ti-7SM"/>
-                                </connections>
-                            </segmentedControl>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ome-pC-n96">
+                                <rect key="frame" x="10" y="98" width="394" height="28"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="gBZ-AS-F4Y" customClass="UISegmentedControlObservable" customModule="Weather_Santiago" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="362" height="29"/>
+                                        <segments>
+                                            <segment title="C"/>
+                                            <segment title="F"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="switchUnits:" destination="BYZ-38-t0r" eventType="valueChanged" id="SgS-Ti-7SM"/>
+                                        </connections>
+                                    </segmentedControl>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M9L-DP-ha9">
+                                        <rect key="frame" x="372" y="0.0" width="22" height="28"/>
+                                        <connections>
+                                            <segue destination="Tgq-oB-9V5" kind="show" id="5Ub-Ng-AVx"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="olq-Uo-Hsv">
                                 <rect key="frame" x="106" y="436" width="203" height="186"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -62,9 +64,14 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="ome-pC-n96" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="0jS-UL-kYR"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ome-pC-n96" secondAttribute="trailing" constant="10" id="Tz1-i1-gjU"/>
+                            <constraint firstItem="ome-pC-n96" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="X71-4x-7ar"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="WP2-4C-6Hv"/>
+                    <navigationItem key="navigationItem" title="Weather Santiago" id="w3w-gF-LfQ"/>
                     <connections>
                         <outlet property="tempLabel" destination="Anq-4i-mbl" id="gcB-lg-gcE"/>
                         <outlet property="toggleMode" destination="CEc-Je-5XD" id="lnR-eU-sys"/>
@@ -74,27 +81,16 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1047.8260869565217" y="101.78571428571428"/>
+            <point key="canvasLocation" x="2868.115942028986" y="101.78571428571428"/>
         </scene>
-        <!--View Controller-->
+        <!--Info View Controller-->
         <scene sceneID="JUS-OI-ciS">
             <objects>
-                <viewController id="Tgq-oB-9V5" sceneMemberID="viewController">
+                <viewController id="Tgq-oB-9V5" customClass="InfoViewController" customModule="Weather_Santiago" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tSG-kQ-jPt">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QW0-gr-fDn">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                            </navigationBar>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pb4-lf-lP7">
-                                <rect key="frame" x="26" y="51" width="34" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Back"/>
-                                <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" identifier="backToWeather" id="u8P-TZ-bA7"/>
-                                </connections>
-                            </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X4I-mq-2bc">
                                 <rect key="frame" x="20" y="108" width="374" height="754"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -105,18 +101,17 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="X4I-mq-2bc" firstAttribute="bottom" secondItem="nE2-uJ-GY2" secondAttribute="bottom" id="8Wy-0M-NgU"/>
-                            <constraint firstItem="X4I-mq-2bc" firstAttribute="leading" secondItem="nE2-uJ-GY2" secondAttribute="leading" constant="20" id="EI4-FC-WxC"/>
-                            <constraint firstItem="nE2-uJ-GY2" firstAttribute="trailing" secondItem="X4I-mq-2bc" secondAttribute="trailing" constant="20" id="Lg0-ds-nB2"/>
-                            <constraint firstItem="QW0-gr-fDn" firstAttribute="top" secondItem="nE2-uJ-GY2" secondAttribute="top" id="i1N-uB-svP"/>
-                            <constraint firstItem="X4I-mq-2bc" firstAttribute="top" secondItem="QW0-gr-fDn" secondAttribute="bottom" constant="20" id="qiG-nP-SUm"/>
+                            <constraint firstItem="nE2-uJ-GY2" firstAttribute="trailing" secondItem="X4I-mq-2bc" secondAttribute="trailing" constant="20" id="ES9-4S-YHH"/>
+                            <constraint firstItem="X4I-mq-2bc" firstAttribute="top" secondItem="nE2-uJ-GY2" secondAttribute="top" constant="20" id="MgT-KO-FrQ"/>
+                            <constraint firstItem="X4I-mq-2bc" firstAttribute="leading" secondItem="nE2-uJ-GY2" secondAttribute="leading" constant="20" id="Rbg-ZP-d8V"/>
+                            <constraint firstItem="nE2-uJ-GY2" firstAttribute="bottom" secondItem="X4I-mq-2bc" secondAttribute="bottom" id="tZj-q6-Mg5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nE2-uJ-GY2"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bY0-ST-JmN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1386" y="-656"/>
+            <point key="canvasLocation" x="1385.5072463768117" y="-656.25"/>
         </scene>
         <!--View Controller Weekly-->
         <scene sceneID="o1Y-DG-g9O">
@@ -166,7 +161,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Z6-Qb-sYX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1824.6376811594205" y="101.78571428571428"/>
+            <point key="canvasLocation" x="3644.9275362318845" y="101.78571428571428"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="b5E-o9-Pwv">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kux-mO-l2d" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="eNm-o1-TWd">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Jzv-mS-knm"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cfl-TV-0XO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1957.9710144927537" y="101.78571428571428"/>
         </scene>
     </scenes>
 </document>

@@ -44,10 +44,10 @@ struct TempWrapperObj:Decodable {
 
 func averageFiveDayData(_ forecasts: [FiveDayData]) -> [FiveDayData] {      // Because I'm using the free version of the API I have to extrapolate 3-hour interval forecasts into days
     // Args: Every three hour forecast received from the JSON
-    var arrayOfDayArrays = [[FiveDayData](), [FiveDayData](), [FiveDayData](), [FiveDayData](), [FiveDayData](), [FiveDayData]()]
+    var arrayOfDayArrays = [[FiveDayData](), [FiveDayData](), [FiveDayData](), [FiveDayData](), [FiveDayData](), [FiveDayData]()]  // the last day is not used
     // first get into appropriate groupings
     // start by getting the first day
-    guard var dayStart: String.Index = forecasts[0].dt_txt.lastIndex(of: "-") else {     // last index is a way to hack Swift's non-intuitive methods for index of
+    guard var dayStart: String.Index = forecasts[0].dt_txt.lastIndex(of: "-") else {     // last index is a way to "hack" Swift's non-intuitive methods for index of
         fatalError("JSON date format incorrect")
     }
     guard let dayEnd: String.Index = forecasts[0].dt_txt.firstIndex(of: " ") else {
