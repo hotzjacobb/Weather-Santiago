@@ -16,11 +16,17 @@ struct WeatherInfo {                        // TODO: change to class; singleton
 
 class ViewController: UIViewController {
     
+    //let bundle = Bundle(for: type(of: self))    // bundle for weather icons
+    
     
     @IBOutlet weak var tempLabel: UILabelObserver!
     @IBOutlet weak var toggleMode: UIButton!
     
     @IBOutlet weak var toggleUnit: UISegmentedControlObservable!
+    
+    @IBOutlet weak var weatherImage: UIImageView!
+    
+    @IBOutlet weak var weatherImageBackground: UIImageView!
     
     
     enum LoadingMessage: String {
@@ -92,6 +98,8 @@ class ViewController: UIViewController {
     }
     
 
+    // private helpers
+    
     private func chooseLoadingMessage() {
         let loadNumber: Int = Int.random(in: 0..<3)    // equally weighted chance
         let loadMessage: String
@@ -108,6 +116,69 @@ class ViewController: UIViewController {
         tempLabel.text = "loading..."
         weatherLabel.text = loadMessage
     }
+    
+    // given the weatherID from the JSON; picks, loads, and displays the proper photo
+    private func displayAppropriateIcon(_ weatherID: Int) {
+        let bundle = Bundle(for: type(of: self))    // we'll load images in
+//        let clearDayImg = UIImage(named: "01d", in: bundle, compatibleWith: self.traitCollection)
+//        let clearNightImg = UIImage(named: "01n", in: bundle, compatibleWith: self.traitCollection)
+//        let fewCloudDayImg = UIImage(named: "02d", in: bundle, compatibleWith: self.traitCollection)
+//        let fewCloudNightImg = UIImage(named: "02n", in: bundle, compatibleWith: self.traitCollection)
+//        let scatteredCloudImg = UIImage(named: "03d", in: bundle, compatibleWith: self.traitCollection)
+//        let brokenCloudImg = UIImage(named: "04d", in: bundle, compatibleWith: self.traitCollection)
+//        let drizzleRainImg = UIImage(named: "09d", in: bundle, compatibleWith: self.traitCollection)
+//        let rainDayImg = UIImage(named: "10d", in: bundle, compatibleWith: self.traitCollection)
+//        let rainNightImg = UIImage(named: "10n", in: bundle, compatibleWith: self.traitCollection)
+//        let thunderstormImg = UIImage(named: "11d", in: bundle, compatibleWith: self.traitCollection)
+//        let snowImg = UIImage(named: "13d", in: bundle, compatibleWith: self.traitCollection)
+//        let mistImg = UIImage(named: "50d", in: bundle, compatibleWith: self.traitCollection)  
+        let weatherLeadingDigit = weatherID / 100            // as defined by the api weatherID is a three digit number;
+        weatherImageBackground.contentMode = UIView.ContentMode.scaleAspectFill // strech image to screen size
+        switch weatherLeadingDigit {
+        case 2 :
+            //weatherImage.image = thunderstormImg
+            let thunderBackground = UIImage(named: "sadman-sakib-3tc2Rfa0OPA-unsplash", in: bundle, compatibleWith: self.traitCollection)
+            weatherImageBackground.image = thunderBackground
+        case 3 :
+            //weatherImage.image = drizzleRainImg
+            let clearSkyBackground = UIImage(named: "danielle-dolson-yeN9XfiUafY-unsplash", in: bundle, compatibleWith: self.traitCollection)
+            weatherImageBackground.image = clearSkyBackground
+        case 5 :
+            //weatherImage.image = rainDayImg
+            let clearSkyBackground = UIImage(named: "nick-nice-ve-R7PCjJDk-unsplash", in: bundle, compatibleWith: self.traitCollection)
+            weatherImageBackground.image = clearSkyBackground
+        case 6 :
+            //weatherImage.image = snowImg
+            let clearSkyBackground = UIImage(named: "benjamin-parker-H3FBy3i9Q7E-unsplash", in: bundle, compatibleWith: self.traitCollection)
+            weatherImageBackground.image = clearSkyBackground
+        case 7 :
+            //weatherImage.image = mistImg
+            let clearSkyBackground = UIImage(named: "annie-spratt-7CME6Wlgrdk-unsplash", in: bundle, compatibleWith: self.traitCollection)
+            weatherImageBackground.image = clearSkyBackground
+        case 8 :
+            if (weatherID == 800) {     // clear skies
+                //weatherImage.image = clearDayImg
+                let clearSkyBackground = UIImage(named: "jakob-owens-QqpQ2lU5-sE-unsplash", in: bundle, compatibleWith: self.traitCollection)
+                weatherImageBackground.image = clearSkyBackground
+            } else if (weatherID == 801) { // light clouds
+                //weatherImage.image = fewCloudDayImg
+                let clearSkyBackground = UIImage(named: "joonas-sild-CwnDbpkSdYI-unsplash", in: bundle, compatibleWith: self.traitCollection)
+                weatherImageBackground.image = clearSkyBackground
+            } else if (weatherID == 802) { // medium clouds
+                //weatherImage.image = scatteredCloudImg
+                let clearSkyBackground = UIImage(named: "daoudi-aissa-Pe1Ol9oLc4o-unsplash", in: bundle, compatibleWith: self.traitCollection)
+                weatherImageBackground.image = clearSkyBackground
+            } else {                // heavy clouds
+                //weatherImage.image = brokenCloudImg
+                let clearSkyBackground = UIImage(named: "daoudi-aissa-Pe1Ol9oLc4o-unsplash", in: bundle, compatibleWith: self.traitCollection)
+                weatherImageBackground.image = clearSkyBackground
+            }
+        default:
+            fatalError("Unexpected weather ID")
+        }
+    }
+    
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -131,11 +202,15 @@ class ViewController: UIViewController {
                 self?.formatter.maximumFractionDigits = 1
                 let tempFormattedString = self?.formatter.string(from: NSNumber(value: (currentDay?.main.temp)!))
                 let currentWeatherText: String = (currentDay?.weather[0].description)!
+                guard let weatherID = currentDay?.weather[0].id else {
+                    fatalError("no id for weather")
+                }
                 DispatchQueue.main.async {                     // UI must be changed from main thread otherwise threads contradict each other
                     self?.tempLabel.text = tempFormattedString!  + "°"
                     self?.weatherLabel.text = currentWeatherText
                     self?.toggleMode.isEnabled = true
                     self?.toggleUnit.isEnabled = true
+                    self?.displayAppropriateIcon(weatherID)           // called last as it loads all the images in
                 }
             }
         }

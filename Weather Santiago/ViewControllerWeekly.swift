@@ -10,6 +10,9 @@ import UIKit
 
 class ViewControllerWeekly: UIViewController {
 
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -17,6 +20,11 @@ class ViewControllerWeekly: UIViewController {
     }
     
 
+    
+    @IBAction func unwindToCurrentForecast(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
 

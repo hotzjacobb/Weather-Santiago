@@ -18,13 +18,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Anq-4i-mbl" customClass="UILabelObserver" customModule="Weather_Santiago" customModuleProvider="target">
-                                <rect key="frame" x="139" y="277" width="137" height="128"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WLn-TE-a2M">
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ome-pC-n96">
                                 <rect key="frame" x="10" y="98" width="394" height="28"/>
                                 <subviews>
@@ -34,40 +31,65 @@
                                             <segment title="C"/>
                                             <segment title="F"/>
                                         </segments>
+                                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <connections>
                                             <action selector="switchUnits:" destination="BYZ-38-t0r" eventType="valueChanged" id="SgS-Ti-7SM"/>
                                         </connections>
                                     </segmentedControl>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M9L-DP-ha9">
                                         <rect key="frame" x="372" y="0.0" width="22" height="28"/>
+                                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <connections>
                                             <segue destination="Tgq-oB-9V5" kind="show" id="5Ub-Ng-AVx"/>
                                         </connections>
                                     </button>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="olq-Uo-Hsv">
-                                <rect key="frame" x="106" y="436" width="203" height="186"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CEc-Je-5XD">
-                                <rect key="frame" x="113" y="750" width="189" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Weekly"/>
-                                <connections>
-                                    <action selector="changeMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JvL-ar-F6L"/>
-                                    <action selector="switchMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pH9-Nw-gor"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="118" translatesAutoresizingMaskIntoConstraints="NO" id="Svj-FB-6w8">
+                                <rect key="frame" x="106" y="271" width="202" height="502"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Anq-4i-mbl" customClass="UILabelObserver" customModule="Weather_Santiago" customModuleProvider="target">
+                                        <rect key="frame" x="32.5" y="0.0" width="137" height="68"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="olq-Uo-Hsv">
+                                        <rect key="frame" x="0.0" y="186" width="202" height="50"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CEc-Je-5XD">
+                                        <rect key="frame" x="76" y="354" width="50" height="30"/>
+                                        <state key="normal" title="Weekly">
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="changeMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JvL-ar-F6L"/>
+                                            <action selector="switchMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pH9-Nw-gor"/>
+                                            <segue destination="ECx-95-f3I" kind="presentation" id="Vrt-Jo-XVS"/>
+                                        </connections>
+                                    </button>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EBk-k0-dxa" userLabel="weatherImage">
+                                        <rect key="frame" x="0.0" y="502" width="202" height="0.0"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
+                                        </accessibility>
+                                    </imageView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ome-pC-n96" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="0jS-UL-kYR"/>
+                            <constraint firstItem="Svj-FB-6w8" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="106" id="DxE-Qd-D2O"/>
+                            <constraint firstItem="Svj-FB-6w8" firstAttribute="centerX" secondItem="ome-pC-n96" secondAttribute="centerX" id="MTV-KT-r5R"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ome-pC-n96" secondAttribute="trailing" constant="10" id="Tz1-i1-gjU"/>
                             <constraint firstItem="ome-pC-n96" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="X71-4x-7ar"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Svj-FB-6w8" secondAttribute="trailing" constant="106" id="bOb-66-N4o"/>
+                            <constraint firstItem="Svj-FB-6w8" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="183" id="gI9-vE-PHe"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Svj-FB-6w8" secondAttribute="bottom" constant="89" id="nSy-sR-tQZ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -76,6 +98,8 @@
                         <outlet property="tempLabel" destination="Anq-4i-mbl" id="gcB-lg-gcE"/>
                         <outlet property="toggleMode" destination="CEc-Je-5XD" id="lnR-eU-sys"/>
                         <outlet property="toggleUnit" destination="gBZ-AS-F4Y" id="EYy-gA-6Da"/>
+                        <outlet property="weatherImage" destination="EBk-k0-dxa" id="ccb-SJ-9AP"/>
+                        <outlet property="weatherImageBackground" destination="WLn-TE-a2M" id="aGr-DZ-f77"/>
                         <outlet property="weatherLabel" destination="olq-Uo-Hsv" id="lCl-6t-iRA"/>
                     </connections>
                 </viewController>
@@ -113,7 +137,7 @@
             </objects>
             <point key="canvasLocation" x="1385.5072463768117" y="-656.25"/>
         </scene>
-        <!--View Controller Weekly-->
+        <!--Weather Santiago-->
         <scene sceneID="o1Y-DG-g9O">
             <objects>
                 <viewController id="PIN-sD-P0e" customClass="ViewControllerWeekly" customModule="Weather_Santiago" customModuleProvider="target" sceneMemberID="viewController">
@@ -121,12 +145,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4CR-d4-dr7">
-                                <rect key="frame" x="113" y="750" width="189" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4CR-d4-dr7">
+                                <rect key="frame" x="113" y="750" width="34" height="30"/>
                                 <state key="normal" title="Daily"/>
                                 <connections>
-                                    <action selector="changeMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KHn-7r-YCd"/>
-                                    <action selector="switchMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mvC-kv-3Wf"/>
+                                    <action selector="unwindToCurrentForecast:" destination="PIN-sD-P0e" eventType="touchUpInside" id="Ygz-f1-CAh"/>
                                 </connections>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="scb-w0-9hc">
@@ -143,6 +166,9 @@
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OhZ-sF-QJe">
                                 <rect key="frame" x="307" y="93" width="30" height="30"/>
                                 <state key="normal" title=" Info"/>
+                                <connections>
+                                    <segue destination="Tgq-oB-9V5" kind="show" id="ODV-IT-3Hb"/>
+                                </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1uG-g8-dyV">
                                 <rect key="frame" x="0.0" y="208" width="414" height="457"/>
@@ -151,17 +177,22 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="268-Ti-Xfy" firstAttribute="bottom" secondItem="4CR-d4-dr7" secondAttribute="bottom" constant="82" id="99h-7E-Vlq"/>
                             <constraint firstItem="1uG-g8-dyV" firstAttribute="top" secondItem="OhZ-sF-QJe" secondAttribute="bottom" constant="85" id="BFZ-b5-aXd"/>
                             <constraint firstItem="268-Ti-Xfy" firstAttribute="trailing" secondItem="1uG-g8-dyV" secondAttribute="trailing" id="GDF-4u-xCJ"/>
+                            <constraint firstItem="4CR-d4-dr7" firstAttribute="top" secondItem="268-Ti-Xfy" secondAttribute="top" constant="662" id="Qvd-xR-F22"/>
                             <constraint firstItem="1uG-g8-dyV" firstAttribute="leading" secondItem="268-Ti-Xfy" secondAttribute="leading" id="SCV-1D-paz"/>
+                            <constraint firstItem="268-Ti-Xfy" firstAttribute="trailing" secondItem="4CR-d4-dr7" secondAttribute="trailing" constant="267" id="bCn-jU-ZFW"/>
                             <constraint firstItem="4CR-d4-dr7" firstAttribute="top" secondItem="1uG-g8-dyV" secondAttribute="bottom" constant="85" id="nZo-av-ABY"/>
+                            <constraint firstItem="4CR-d4-dr7" firstAttribute="leading" secondItem="268-Ti-Xfy" secondAttribute="leading" constant="113" id="sy7-SF-F4F"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="268-Ti-Xfy"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Weather Santiago" id="8bH-dq-zeM"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Z6-Qb-sYX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3644.9275362318845" y="101.78571428571428"/>
+            <point key="canvasLocation" x="4555.072463768116" y="101.78571428571428"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="b5E-o9-Pwv">
@@ -181,5 +212,26 @@
             </objects>
             <point key="canvasLocation" x="1957.9710144927537" y="101.78571428571428"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="mEA-V5-aam">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ECx-95-f3I" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="n5e-Xo-aje">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="PIN-sD-P0e" kind="relationship" relationship="rootViewController" id="yZJ-uV-sh7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iGq-3j-ON2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3644.9275362318845" y="101.78571428571428"/>
+        </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="ODV-IT-3Hb"/>
+    </inferredMetricsTieBreakers>
 </document>
