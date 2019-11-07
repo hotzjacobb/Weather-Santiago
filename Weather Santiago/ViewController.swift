@@ -45,17 +45,6 @@ class ViewController: UIViewController {
     
 
     
-    @IBAction func changeMode(_ sender: UIButton) {       // sent by toggleMode
-        
-        // Change title of button to be that of now not-in-use mode
-        if (daily) {
-            sender.setTitle("Daily", for: .normal)
-            daily = false;
-        } else {
-            sender.setTitle("Weekly", for: .normal)
-            daily = true
-        }
-    }
   
     enum Temperature: Int {
         case Celsius
@@ -93,10 +82,6 @@ class ViewController: UIViewController {
     }
     
     
-    @IBAction func switchMode(_ sender: UIButton) {
-        
-    }
-    
 
     // private helpers
     
@@ -120,18 +105,6 @@ class ViewController: UIViewController {
     // given the weatherID from the JSON; picks, loads, and displays the proper photo
     private func displayAppropriateIcon(_ weatherID: Int) {
         let bundle = Bundle(for: type(of: self))    // we'll load images in
-//        let clearDayImg = UIImage(named: "01d", in: bundle, compatibleWith: self.traitCollection)
-//        let clearNightImg = UIImage(named: "01n", in: bundle, compatibleWith: self.traitCollection)
-//        let fewCloudDayImg = UIImage(named: "02d", in: bundle, compatibleWith: self.traitCollection)
-//        let fewCloudNightImg = UIImage(named: "02n", in: bundle, compatibleWith: self.traitCollection)
-//        let scatteredCloudImg = UIImage(named: "03d", in: bundle, compatibleWith: self.traitCollection)
-//        let brokenCloudImg = UIImage(named: "04d", in: bundle, compatibleWith: self.traitCollection)
-//        let drizzleRainImg = UIImage(named: "09d", in: bundle, compatibleWith: self.traitCollection)
-//        let rainDayImg = UIImage(named: "10d", in: bundle, compatibleWith: self.traitCollection)
-//        let rainNightImg = UIImage(named: "10n", in: bundle, compatibleWith: self.traitCollection)
-//        let thunderstormImg = UIImage(named: "11d", in: bundle, compatibleWith: self.traitCollection)
-//        let snowImg = UIImage(named: "13d", in: bundle, compatibleWith: self.traitCollection)
-//        let mistImg = UIImage(named: "50d", in: bundle, compatibleWith: self.traitCollection)  
         let weatherLeadingDigit = weatherID / 100            // as defined by the api weatherID is a three digit number;
         weatherImageBackground.contentMode = UIView.ContentMode.scaleAspectFill // strech image to screen size
         switch weatherLeadingDigit {

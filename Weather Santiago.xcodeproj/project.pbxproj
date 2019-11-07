@@ -15,6 +15,7 @@
 		7F5AE8A7233C3E9E00567EB1 /* Weather_SantiagoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5AE8A6233C3E9E00567EB1 /* Weather_SantiagoTests.swift */; };
 		7F5AE8B2233C3E9E00567EB1 /* Weather_SantiagoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5AE8B1233C3E9E00567EB1 /* Weather_SantiagoUITests.swift */; };
 		7F8AC2AC2370BE1300EC63D4 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8AC2AB2370BE1300EC63D4 /* InfoViewController.swift */; };
+		7FADAEA12374979F00320A97 /* WeatherDayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FADAEA02374979F00320A97 /* WeatherDayTableViewCell.swift */; };
 		7FE6886B2346ECD80038EE8F /* WeatherInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE6886A2346ECD80038EE8F /* WeatherInfo.swift */; };
 		7FE9D8E4236722EE00BCAFF0 /* ViewControllerWeekly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE9D8E3236722EE00BCAFF0 /* ViewControllerWeekly.swift */; };
 		7FE9D8EC236743CB00BCAFF0 /* TempObserverPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE9D8EB236743CB00BCAFF0 /* TempObserverPattern.swift */; };
@@ -55,6 +56,7 @@
 		7F5AE8B1233C3E9E00567EB1 /* Weather_SantiagoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather_SantiagoUITests.swift; sourceTree = "<group>"; };
 		7F5AE8B3233C3E9E00567EB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F8AC2AB2370BE1300EC63D4 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		7FADAEA02374979F00320A97 /* WeatherDayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDayTableViewCell.swift; sourceTree = "<group>"; };
 		7FE6886A2346ECD80038EE8F /* WeatherInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInfo.swift; sourceTree = "<group>"; };
 		7FE9D8E3236722EE00BCAFF0 /* ViewControllerWeekly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerWeekly.swift; sourceTree = "<group>"; };
 		7FE9D8EB236743CB00BCAFF0 /* TempObserverPattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempObserverPattern.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				7F5AE891233C3E9C00567EB1 /* AppDelegate.swift */,
 				7F5AE893233C3E9C00567EB1 /* ViewController.swift */,
 				7FE9D8ED23674B0300BCAFF0 /* UILabelObserver.swift */,
+				7FADAEA02374979F00320A97 /* WeatherDayTableViewCell.swift */,
 				7FE6886A2346ECD80038EE8F /* WeatherInfo.swift */,
 				7FF7AC21234ADF0A00F46589 /* WeatherRequest.swift */,
 				7F5AE895233C3E9C00567EB1 /* Main.storyboard */,
@@ -282,6 +285,7 @@
 				7FF7AC22234ADF0A00F46589 /* WeatherRequest.swift in Sources */,
 				7F5AE894233C3E9C00567EB1 /* ViewController.swift in Sources */,
 				7F8AC2AC2370BE1300EC63D4 /* InfoViewController.swift in Sources */,
+				7FADAEA12374979F00320A97 /* WeatherDayTableViewCell.swift in Sources */,
 				7FE9D8E4236722EE00BCAFF0 /* ViewControllerWeekly.swift in Sources */,
 				7F5AE892233C3E9C00567EB1 /* AppDelegate.swift in Sources */,
 				7FE9D8EC236743CB00BCAFF0 /* TempObserverPattern.swift in Sources */,
