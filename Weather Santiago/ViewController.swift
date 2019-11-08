@@ -9,10 +9,10 @@
 import UIKit
 
 // Struct that encompasses data from both the daily and five-day forecast
-struct WeatherInfo {                        // TODO: change to class; singleton
-    var currentDayData: WeatherDataTemp?
-    var fiveDayData: [FiveDayData]?
-}
+//struct WeatherInfo {                        // TODO: change to class; singleton
+//    var currentDayData: WeatherDataTemp?
+//    var fiveDayData: [FiveDayData]?
+//}
 
 class ViewController: UIViewController {
     
@@ -103,7 +103,7 @@ class ViewController: UIViewController {
     }
     
     // given the weatherID from the JSON; picks, loads, and displays the proper photo
-    private func displayAppropriateIcon(_ weatherID: Int) {
+    private func displayAppropriatePhoto(_ weatherID: Int) {
         let bundle = Bundle(for: type(of: self))    // we'll load images in
         let weatherLeadingDigit = weatherID / 100            // as defined by the api weatherID is a three digit number;
         weatherImageBackground.contentMode = UIView.ContentMode.scaleAspectFill // strech image to screen size
@@ -158,9 +158,10 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.chooseLoadingMessage()
         toggleUnit.addObserver(tempLabel)
-        weatherData = WeatherInfo()
-        let weatherData = WeatherRequest(unit)
-        weatherData.getCurrentWeather { [weak self] result in         // tell Swift garbage collection if view dismissed -> free memory
+        //weatherData = WeatherInfo()
+        self.weatherData = WeatherInfo.weatherData
+        let weatherReq = WeatherRequest(unit)
+        weatherReq.getCurrentWeather { [weak self] result in         // tell Swift garbage collection if view dismissed -> free memory
             switch result {
             case .failure(let error):
                 //print("failure")
@@ -170,24 +171,25 @@ class ViewController: UIViewController {
                 //self?.weatherData?.currentDayData = WeatherDataTemp(weather: weatherCurrent.weather, main: weatherCurrent.main)
                 self?.weatherData?.currentDayData = weatherCurrent
                 let currentDay = self!.weatherData?.currentDayData!
-                self?.formatter.numberStyle = NumberFormatter.Style.decimal
-                self?.formatter.roundingMode = NumberFormatter.RoundingMode.halfUp
-                self?.formatter.maximumFractionDigits = 1
-                let tempFormattedString = self?.formatter.string(from: NSNumber(value: (currentDay?.main.temp)!))
+//                self?.formatter.numberStyle = NumberFormatter.Style.decimal
+//                self?.formatter.roundingMode = NumberFormatter.RoundingMode.halfUp
+//                self?.formatter.maximumFractionDigits = 1
+                //let tempFormattedString = self?.formatter.string(from: NSNumber(value: (currentDay?.main.temp)!))
+                let tempFormattedString = String(Int((currentDay?.main.temp)!))
                 let currentWeatherText: String = (currentDay?.weather[0].description)!
                 guard let weatherID = currentDay?.weather[0].id else {
                     fatalError("no id for weather")
                 }
                 DispatchQueue.main.async {                     // UI must be changed from main thread otherwise threads contradict each other
-                    self?.tempLabel.text = tempFormattedString!  + "°"
+                    self?.tempLabel.text = tempFormattedString  + "°"
                     self?.weatherLabel.text = currentWeatherText
                     self?.toggleMode.isEnabled = true
                     self?.toggleUnit.isEnabled = true
-                    self?.displayAppropriateIcon(weatherID)           // called last as it loads all the images in
+                    self?.displayAppropriatePhoto(weatherID)           // called last as it loads all the images in
                 }
             }
         }
-        weatherData.getFiveDayWeather { [weak self] result in         // tell Swift garbage collection if view dismissed -> free memory
+      weatherReq.getFiveDayWeather { [weak self] result in         // tell Swift garbage collection if view dismissed -> free memory
             switch result {
             case .failure(let error):
                 //print("failure")
