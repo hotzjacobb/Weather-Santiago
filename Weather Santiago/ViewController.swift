@@ -183,8 +183,6 @@ class ViewController: UIViewController {
                 DispatchQueue.main.async {                     // UI must be changed from main thread otherwise threads contradict each other
                     self?.tempLabel.text = tempFormattedString  + "°"
                     self?.weatherLabel.text = currentWeatherText
-                    self?.toggleMode.isEnabled = true
-                    self?.toggleUnit.isEnabled = true
                     self?.displayAppropriatePhoto(weatherID)           // called last as it loads all the images in
                 }
             }
@@ -196,6 +194,10 @@ class ViewController: UIViewController {
                 print(error)
             case .success(let weatherFiveDay):
                 //print("success")
+                DispatchQueue.main.async {                     // Allow to switch now that we have all the data
+                    self?.toggleMode.isEnabled = true
+                    self?.toggleUnit.isEnabled = true
+                }
                 self?.weatherData?.fiveDayData = weatherFiveDay
             }
         }

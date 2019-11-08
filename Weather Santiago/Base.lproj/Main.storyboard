@@ -61,7 +61,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CEc-Je-5XD">
-                                        <rect key="frame" x="76" y="354" width="50" height="30"/>
+                                        <rect key="frame" x="76" y="354" width="50" height="148"/>
                                         <state key="normal" title="Weekly">
                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                         </state>
@@ -69,12 +69,6 @@
                                             <segue destination="ECx-95-f3I" kind="presentation" id="Vrt-Jo-XVS"/>
                                         </connections>
                                     </button>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EBk-k0-dxa" userLabel="weatherImage">
-                                        <rect key="frame" x="0.0" y="502" width="202" height="0.0"/>
-                                        <accessibility key="accessibilityConfiguration">
-                                            <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
-                                        </accessibility>
-                                    </imageView>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -96,7 +90,6 @@
                         <outlet property="tempLabel" destination="Anq-4i-mbl" id="gcB-lg-gcE"/>
                         <outlet property="toggleMode" destination="CEc-Je-5XD" id="08R-Vi-WCd"/>
                         <outlet property="toggleUnit" destination="gBZ-AS-F4Y" id="EYy-gA-6Da"/>
-                        <outlet property="weatherImage" destination="EBk-k0-dxa" id="ccb-SJ-9AP"/>
                         <outlet property="weatherImageBackground" destination="WLn-TE-a2M" id="aGr-DZ-f77"/>
                         <outlet property="weatherLabel" destination="olq-Uo-Hsv" id="lCl-6t-iRA"/>
                     </connections>
@@ -143,120 +136,123 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1uG-g8-dyV">
-                                <rect key="frame" x="0.0" y="144" width="414" height="645"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Daily Forecast" rowHeight="133" id="n0L-XO-v0E" customClass="WeatherDayTableViewCell" customModule="Weather_Santiago" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="133"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="n0L-XO-v0E" id="QxR-x9-biy">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="132.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="Izk-CD-yiv">
-                                                    <rect key="frame" x="14" y="7" width="386" height="118"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="ByN-ex-L1V" userLabel="Whole Thing">
+                                <rect key="frame" x="0.0" y="98" width="414" height="754"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Mri-DB-HZ5" userLabel="Top">
+                                        <rect key="frame" x="10" y="0.0" width="394" height="28"/>
+                                        <subviews>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ZGU-DP-eIv" customClass="UISegmentedControlObservable" customModule="Weather_Santiago" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="362" height="29"/>
+                                                <segments>
+                                                    <segment title="C"/>
+                                                    <segment title="F"/>
+                                                </segments>
+                                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <connections>
+                                                    <action selector="switchUnits:" destination="BYZ-38-t0r" eventType="valueChanged" id="9Tu-iX-Qqi"/>
+                                                </connections>
+                                            </segmentedControl>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OhZ-sF-QJe">
+                                                <rect key="frame" x="372" y="0.0" width="22" height="28"/>
+                                                <connections>
+                                                    <segue destination="Tgq-oB-9V5" kind="show" id="ODV-IT-3Hb"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <tableView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1uG-g8-dyV">
+                                        <rect key="frame" x="0.0" y="41" width="414" height="641"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Daily Forecast" rowHeight="133" id="n0L-XO-v0E" customClass="WeatherDayTableViewCell" customModule="Weather_Santiago" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="28" width="414" height="133"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="n0L-XO-v0E" id="QxR-x9-biy">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="132.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ydl-H3-80i" userLabel="Day of the Week">
-                                                            <rect key="frame" x="0.0" y="0.0" width="42" height="118"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nEn-jn-QcZ">
-                                                            <rect key="frame" x="102" y="0.0" width="125" height="118"/>
-                                                        </imageView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="kbV-F9-Qdy">
-                                                            <rect key="frame" x="287" y="0.0" width="99" height="118"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="Izk-CD-yiv" userLabel="Cell Content">
+                                                            <rect key="frame" x="20" y="20" width="374" height="92.5"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="High" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tBY-iy-Okl" userLabel="High">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="99" height="45"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ydl-H3-80i" userLabel="Day of the Week">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="87" height="92.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BXi-5c-KaU" userLabel="Avg">
-                                                                    <rect key="frame" x="0.0" y="61" width="99" height="20.5"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XWk-nd-IIs" userLabel="Low">
-                                                                    <rect key="frame" x="0.0" y="97.5" width="99" height="20.5"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nEn-jn-QcZ">
+                                                                    <rect key="frame" x="147" y="0.0" width="125" height="92.5"/>
+                                                                </imageView>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="kbV-F9-Qdy" userLabel="Cell Temps">
+                                                                    <rect key="frame" x="332" y="0.0" width="42" height="92.5"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="High" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tBY-iy-Okl" userLabel="High">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="42" height="20.5"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BXi-5c-KaU" userLabel="Avg">
+                                                                            <rect key="frame" x="0.0" y="36.5" width="42" height="20.5"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XWk-nd-IIs" userLabel="Low">
+                                                                            <rect key="frame" x="0.0" y="73" width="42" height="19.5"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                </stackView>
                                                             </subviews>
                                                         </stackView>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="trailing" secondItem="kbV-F9-Qdy" secondAttribute="trailing" id="CRd-GI-anV"/>
-                                                        <constraint firstItem="kbV-F9-Qdy" firstAttribute="top" secondItem="Izk-CD-yiv" secondAttribute="top" id="OBI-KN-9mR"/>
-                                                        <constraint firstAttribute="bottom" secondItem="kbV-F9-Qdy" secondAttribute="bottom" id="cLW-Un-mJf"/>
-                                                        <constraint firstItem="kbV-F9-Qdy" firstAttribute="leading" secondItem="nEn-jn-QcZ" secondAttribute="trailing" constant="60" id="daN-Ur-KXu"/>
-                                                        <constraint firstItem="kbV-F9-Qdy" firstAttribute="leading" secondItem="Izk-CD-yiv" secondAttribute="leading" constant="287" id="hbz-hC-kdV"/>
+                                                        <constraint firstItem="Izk-CD-yiv" firstAttribute="leading" secondItem="QxR-x9-biy" secondAttribute="leading" constant="20" id="5c9-68-Vto"/>
+                                                        <constraint firstAttribute="bottom" secondItem="Izk-CD-yiv" secondAttribute="bottom" constant="20" id="cuw-oO-cSb"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Izk-CD-yiv" secondAttribute="trailing" constant="20" id="gXO-ie-JjJ"/>
+                                                        <constraint firstItem="Izk-CD-yiv" firstAttribute="top" secondItem="QxR-x9-biy" secondAttribute="top" constant="20" id="iDU-Ga-DyF"/>
                                                     </constraints>
-                                                </stackView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="Izk-CD-yiv" secondAttribute="bottom" constant="7.5" id="Lrw-Xh-qS6"/>
-                                                <constraint firstItem="Izk-CD-yiv" firstAttribute="top" secondItem="QxR-x9-biy" secondAttribute="top" constant="7" id="ag3-Jl-1eZ"/>
-                                                <constraint firstItem="Izk-CD-yiv" firstAttribute="leading" secondItem="QxR-x9-biy" secondAttribute="leading" constant="14" id="pOm-ck-73W"/>
-                                                <constraint firstAttribute="trailing" secondItem="Izk-CD-yiv" secondAttribute="trailing" constant="14" id="s9y-ra-Whp"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
+                                                </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="avg" destination="BXi-5c-KaU" id="LEa-ly-MdE"/>
+                                                    <outlet property="dayOfTheWeek" destination="Ydl-H3-80i" id="mZ9-ia-o2d"/>
+                                                    <outlet property="high" destination="tBY-iy-Okl" id="6pt-pe-3fp"/>
+                                                    <outlet property="low" destination="XWk-nd-IIs" id="alW-Zs-nRi"/>
+                                                    <outlet property="weatherIcon" destination="nEn-jn-QcZ" id="jE8-uK-7IM"/>
+                                                </connections>
+                                            </tableViewCell>
+                                        </prototypes>
                                         <connections>
-                                            <outlet property="avg" destination="BXi-5c-KaU" id="LEa-ly-MdE"/>
-                                            <outlet property="dayOfTheWeek" destination="Ydl-H3-80i" id="mZ9-ia-o2d"/>
-                                            <outlet property="high" destination="tBY-iy-Okl" id="6pt-pe-3fp"/>
-                                            <outlet property="low" destination="XWk-nd-IIs" id="alW-Zs-nRi"/>
-                                            <outlet property="weatherIcon" destination="nEn-jn-QcZ" id="jE8-uK-7IM"/>
+                                            <outlet property="dataSource" destination="PIN-sD-P0e" id="Kyv-xw-8Wx"/>
+                                            <outlet property="delegate" destination="PIN-sD-P0e" id="rtX-AO-3r9"/>
                                         </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="PIN-sD-P0e" id="Kyv-xw-8Wx"/>
-                                    <outlet property="delegate" destination="PIN-sD-P0e" id="rtX-AO-3r9"/>
-                                </connections>
-                            </tableView>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Mri-DB-HZ5">
-                                <rect key="frame" x="10" y="98" width="394" height="28"/>
-                                <subviews>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ZGU-DP-eIv" customClass="UISegmentedControlObservable" customModule="Weather_Santiago" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="362" height="29"/>
-                                        <segments>
-                                            <segment title="C"/>
-                                            <segment title="F"/>
-                                        </segments>
-                                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    </tableView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4CR-d4-dr7">
+                                        <rect key="frame" x="190" y="695" width="34" height="59"/>
+                                        <state key="normal" title="Daily"/>
                                         <connections>
-                                            <action selector="switchUnits:" destination="BYZ-38-t0r" eventType="valueChanged" id="9Tu-iX-Qqi"/>
-                                        </connections>
-                                    </segmentedControl>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OhZ-sF-QJe">
-                                        <rect key="frame" x="372" y="0.0" width="22" height="28"/>
-                                        <connections>
-                                            <segue destination="Tgq-oB-9V5" kind="show" id="ODV-IT-3Hb"/>
+                                            <action selector="unwindToCurrentForecast:" destination="PIN-sD-P0e" eventType="touchUpInside" id="Ygz-f1-CAh"/>
                                         </connections>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="Mri-DB-HZ5" firstAttribute="top" secondItem="ByN-ex-L1V" secondAttribute="top" id="PYE-hQ-CUd"/>
+                                    <constraint firstAttribute="trailing" secondItem="Mri-DB-HZ5" secondAttribute="trailing" constant="10" id="cFF-WN-Poy"/>
+                                    <constraint firstAttribute="trailing" secondItem="1uG-g8-dyV" secondAttribute="trailing" id="hYs-lL-DVP"/>
+                                    <constraint firstItem="1uG-g8-dyV" firstAttribute="leading" secondItem="ByN-ex-L1V" secondAttribute="leading" id="k8Z-Vg-bYP"/>
+                                </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4CR-d4-dr7">
-                                <rect key="frame" x="190" y="817" width="34" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Daily"/>
-                                <connections>
-                                    <action selector="unwindToCurrentForecast:" destination="PIN-sD-P0e" eventType="touchUpInside" id="Ygz-f1-CAh"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Mri-DB-HZ5" firstAttribute="leading" secondItem="268-Ti-Xfy" secondAttribute="leading" constant="10" id="5jX-3O-nFh"/>
-                            <constraint firstItem="268-Ti-Xfy" firstAttribute="trailing" secondItem="Mri-DB-HZ5" secondAttribute="trailing" constant="10" id="Awj-6j-1La"/>
-                            <constraint firstItem="Mri-DB-HZ5" firstAttribute="top" secondItem="268-Ti-Xfy" secondAttribute="top" constant="10" id="SpA-LW-9WG"/>
+                            <constraint firstItem="268-Ti-Xfy" firstAttribute="trailing" secondItem="ByN-ex-L1V" secondAttribute="trailing" id="7AQ-j6-OeR"/>
+                            <constraint firstItem="ByN-ex-L1V" firstAttribute="leading" secondItem="268-Ti-Xfy" secondAttribute="leading" id="hjG-wz-uW1"/>
+                            <constraint firstItem="268-Ti-Xfy" firstAttribute="bottom" secondItem="ByN-ex-L1V" secondAttribute="bottom" constant="10" id="nUt-Vq-ONV"/>
+                            <constraint firstItem="ByN-ex-L1V" firstAttribute="top" secondItem="268-Ti-Xfy" secondAttribute="top" constant="10" id="x9v-HI-ckV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="268-Ti-Xfy"/>
                     </view>
