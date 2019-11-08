@@ -8,7 +8,22 @@
 
 import UIKit
 
-class ViewControllerWeekly: UIViewController {
+class ViewControllerWeekly: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let newCell = self.tableView.dequeueReusableCell(withIdentifier: "Daily Forecast") as! WeatherDayTableViewCell
+        newCell.dayOfTheWeek.text = "Hey"
+        return newCell
+    }
+    
 
     
     

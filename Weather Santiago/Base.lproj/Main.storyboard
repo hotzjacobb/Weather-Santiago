@@ -148,7 +148,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="133" id="n0L-XO-v0E" customClass="WeatherDayTableViewCell" customModule="Weather_Santiago" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Daily Forecast" rowHeight="133" id="n0L-XO-v0E" customClass="WeatherDayTableViewCell" customModule="Weather_Santiago" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="133"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="n0L-XO-v0E" id="QxR-x9-biy">
@@ -216,6 +216,10 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="PIN-sD-P0e" id="Kyv-xw-8Wx"/>
+                                    <outlet property="delegate" destination="PIN-sD-P0e" id="rtX-AO-3r9"/>
+                                </connections>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Mri-DB-HZ5">
                                 <rect key="frame" x="10" y="98" width="394" height="28"/>
@@ -257,6 +261,9 @@
                         <viewLayoutGuide key="safeArea" id="268-Ti-Xfy"/>
                     </view>
                     <navigationItem key="navigationItem" title="Weather Santiago" id="8bH-dq-zeM"/>
+                    <connections>
+                        <outlet property="tableView" destination="1uG-g8-dyV" id="NSz-zn-yX3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Z6-Qb-sYX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
