@@ -10,11 +10,11 @@ import Foundation
 
 protocol Observer {
     var id : Int{ get }
-    func update(_ weatherData: WeatherInfo, _ formatter: NumberFormatter)
+    func update(_ weatherData: WeatherInfo)
 }
 
 protocol Observable {
     var observers : [Observer] { get set }
     func addObserver(_ observer: Observer)
-    func notifyObservers(_ observers: [Observer], _ weatherData: WeatherInfo, _ formatter: NumberFormatter)
+    func notifyObservers(_ observers: [Observer], _ weatherData: WeatherInfo)
 }

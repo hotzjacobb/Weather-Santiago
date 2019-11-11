@@ -20,11 +20,8 @@ class UILabelObserver: UILabel, Observer {
         super.init(coder: aDecoder)
     }
     
-    func update(_ weatherData: WeatherInfo, _ formatter: NumberFormatter) {
-        guard let formattedTempString: String = formatter.string(from: NSNumber(value: (weatherData.currentDayData?.main.temp)!)) else {
-            fatalError("Expected a string")
-        }
-        self.text = formattedTempString + "°"
+    func update(_ weatherData: WeatherInfo) {
+        self.text = String(Int((weatherData.currentDayData?.main.temp)!)) + "°"
     }
     
 

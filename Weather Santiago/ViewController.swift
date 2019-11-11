@@ -22,9 +22,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var tempLabel: UILabelObserver!
     @IBOutlet weak var toggleMode: UIButton!
     
+  
     @IBOutlet weak var toggleUnit: UISegmentedControlObservable!
     
-    @IBOutlet weak var weatherImage: UIImageView!
     
     @IBOutlet weak var weatherImageBackground: UIImageView!
     
@@ -46,39 +46,56 @@ class ViewController: UIViewController {
 
     
   
-    enum Temperature: Int {
-        case Celsius
-        case Farenheit
-    }
+    
     
     @IBAction func switchUnits(_ sender: UISegmentedControl) {
-        guard let tempMode = Temperature(rawValue: toggleUnit.selectedSegmentIndex) else {
+        guard let tempMode = WeatherInfo.Temperature(rawValue: toggleUnit.selectedSegmentIndex) else {
             fatalError("Unexpected toggleUnit.selectedSegmentIndex value")
         }
+        PreferencesManager.shared.currentTempUnit = tempMode
         switch (tempMode) {                  // switch to Farenheit
             
         case .Farenheit:
             
             self.weatherData!.currentDayData!.main.temp = self.weatherData!.currentDayData!.main.temp * (9/5) + 32
             
-            for var element in self.weatherData!.fiveDayData! {      // convert all temps
-                element.main.temp = element.main.temp * (9/5) + 32
-                element.main.temp_min = element.main.temp_min * (9/5) + 32
-                element.main.temp_max = element.main.temp_max * (9/5) + 32
-            }
+//            for var element in self.weatherData!.fiveDayData! {      // convert all temps
+//                element.main.temp = element.main.temp * (9/5) + 32
+//                element.main.temp_min = element.main.temp_min * (9/5) + 32
+//                element.main.temp_max = element.main.temp_max * (9/5) + 32
+//            }
+            
+            // simple change to multiply temps; swift makes us copy the array; thus we use map
+//            self.weatherData!.fiveDayData = self.weatherData!.fiveDayData!.map({(day) -> FiveDayData in
+//                let high = day.main.temp_max * (9/5) + 32
+//                let avg = day.main.temp * (9/5) + 32
+//                let low = day.main.temp_min * (9/5) + 32
+//                let main = TempWrapperObj(temp: avg, temp_min: low, temp_max: high)
+//                let dayConverted = FiveDayData(weather: day.weather, main: main, dt_txt: day.dt_txt)
+//                return dayConverted})
+            
+            self.weatherData!.fiveDayData = self.weatherData!.fiveDayData!.map(weatherData!.celsiusToFarenheit)
             
         case .Celsius:                                              // switch to Celcius
             self.weatherData!.currentDayData!.main.temp = (self.weatherData!.currentDayData!.main.temp - 32) * (5/9)
-            for var element in self.weatherData!.fiveDayData! {      // convert all temps
-                element.main.temp = (element.main.temp - 32) * (5/9)
-                element.main.temp_min = (element.main.temp_min - 32) * (5/9)
-                element.main.temp_max = (element.main.temp_max - 32) * (5/9)
-            }
+            
+            self.weatherData!.fiveDayData = self.weatherData!.fiveDayData!.map(weatherData!.farenheitToCelsius)
+            
+            // simple change to multiply temps; swift makes us copy the array; thus we use map
+//            self.weatherData!.fiveDayData = self.weatherData!.fiveDayData!.map({(day) -> FiveDayData in
+//                let high = (day.main.temp_max - 32) * (5/9)
+//                let avg = (day.main.temp - 32) * (5/9)
+//                let low = (day.main.temp_min - 32) * (5/9)
+//                let main = TempWrapperObj(temp: avg, temp_min: low, temp_max: high)
+//                let dayConverted = FiveDayData(weather: day.weather, main: main, dt_txt: day.dt_txt)
+//                return dayConverted})
+            
         }
         guard let weatherDataToSend: WeatherInfo = weatherData else {
             fatalError("Weather Data not instantiated")
         }
-        toggleUnit.notifyObservers(toggleUnit.observers, weatherDataToSend, formatter)   // TODO: formatter probably passed as pointer use other strategy to keep in memory
+        print(self.weatherData!.currentDayData!.main.temp)
+        toggleUnit.notifyObservers(toggleUnit.observers, weatherDataToSend)
     }
     
     
@@ -158,23 +175,17 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.chooseLoadingMessage()
         toggleUnit.addObserver(tempLabel)
-        //weatherData = WeatherInfo()
+        toggleUnit.selectedSegmentIndex = PreferencesManager.shared.currentTempUnit.rawValue
         self.weatherData = WeatherInfo.weatherData
-        let weatherReq = WeatherRequest(unit)
+        let weatherReq = WeatherRequest(PreferencesManager.shared.currentTempUnit)
         weatherReq.getCurrentWeather { [weak self] result in         // tell Swift garbage collection if view dismissed -> free memory
             switch result {
             case .failure(let error):
-                //print("failure")
                 print(error)
             case .success(let weatherCurrent):
-                print("success")
-                //self?.weatherData?.currentDayData = WeatherDataTemp(weather: weatherCurrent.weather, main: weatherCurrent.main)
                 self?.weatherData?.currentDayData = weatherCurrent
                 let currentDay = self!.weatherData?.currentDayData!
-//                self?.formatter.numberStyle = NumberFormatter.Style.decimal
-//                self?.formatter.roundingMode = NumberFormatter.RoundingMode.halfUp
-//                self?.formatter.maximumFractionDigits = 1
-                //let tempFormattedString = self?.formatter.string(from: NSNumber(value: (currentDay?.main.temp)!))
+                print("%f", (currentDay?.main.temp)!)
                 let tempFormattedString = String(Int((currentDay?.main.temp)!))
                 let currentWeatherText: String = (currentDay?.weather[0].description)!
                 guard let weatherID = currentDay?.weather[0].id else {
@@ -190,10 +201,8 @@ class ViewController: UIViewController {
       weatherReq.getFiveDayWeather { [weak self] result in         // tell Swift garbage collection if view dismissed -> free memory
             switch result {
             case .failure(let error):
-                //print("failure")
                 print(error)
             case .success(let weatherFiveDay):
-                //print("success")
                 DispatchQueue.main.async {                     // Allow to switch now that we have all the data
                     self?.toggleMode.isEnabled = true
                     self?.toggleUnit.isEnabled = true

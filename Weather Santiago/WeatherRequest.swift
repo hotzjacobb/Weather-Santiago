@@ -21,13 +21,11 @@ struct WeatherRequest {
     let unit: String
 
 
-    init(_ unit: Unit) {
-    if (unit == Unit.Celcius) {
+    init(_ unit: WeatherInfo.Temperature) {
+        if (unit == WeatherInfo.Temperature.Celsius) {
         self.unit = "metric"
-        // TODO: convert temp
     } else {
         self.unit = "imperial"
-        // TODO: convert temp
     }
     // create string for current weather url lookup
     let requestStringCurrent: String = "https://api.openweathermap.org/data/2.5/weather?id=\(santiagoId)&units=\(self.unit)&appid=\(apiKey)"
@@ -69,7 +67,6 @@ struct WeatherRequest {
             }
             do {
                 let jsonResp = try JSONSerialization.jsonObject(with: jsonDataDaily, options: [])
-                //print(jsonResp)
                 let decoder = JSONDecoder()
                 let weatherResponse = try decoder.decode(FiveDayDataWrapper.self, from: jsonDataDaily)
                 var weatherList = weatherResponse.list

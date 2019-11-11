@@ -16,8 +16,8 @@ class UISegmentedControlObservable: UISegmentedControl, Observable {
         observers.append(observer)
     }
     
-    func notifyObservers(_ observers: [Observer],_ weatherData: WeatherInfo, _ formatter: NumberFormatter) {
-        observers.forEach({ $0.update(weatherData, formatter)})
+    func notifyObservers(_ observers: [Observer],_ weatherData: WeatherInfo) {
+        observers.forEach({ $0.update(weatherData)})
     }
     
 

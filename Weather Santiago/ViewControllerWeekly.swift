@@ -10,7 +10,12 @@ import UIKit
 
 class ViewControllerWeekly: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var daysOfTheWeek = [String]()
+    
+    @IBOutlet weak var toggleUnit: UISegmentedControlObservable!
+    
+    var daysOfTheWeek = [String]()     // to be displayed on labels
+    
+    var weatherData: WeatherInfo?
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -23,9 +28,19 @@ class ViewControllerWeekly: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let newCell = self.tableView.dequeueReusableCell(withIdentifier: "Daily Forecast") as! WeatherDayTableViewCell
         newCell.dayOfTheWeek.text = daysOfTheWeek[indexPath.row]        // set the week day
+        
         newCell.high.text = String(Int(((WeatherInfo.weatherData.fiveDayData?[indexPath.row].main.temp_max)!)))   // set the high
+        newCell.high.category = .high   // give necessary info to fetch temp var on switch unit event
+        newCell.high.index = indexPath.row
+        
         newCell.low.text = String(Int(((WeatherInfo.weatherData.fiveDayData?[indexPath.row].main.temp_min)!)))   // set the low
+        newCell.low.category = .low    // give necessary info to fetch temp var on switch unit event
+        newCell.low.index = indexPath.row
+        
         newCell.avg.text = String(Int(((WeatherInfo.weatherData.fiveDayData?[indexPath.row].main.temp)!)))    // set the average
+        newCell.avg.category = .avg   // give necessary info to fetch temp var on switch unit event
+        newCell.avg.index = indexPath.row
+        
         newCell.weatherIcon.image = displayAppropriateIcon(((WeatherInfo.weatherData.fiveDayData?[indexPath.row].weather[0].id)!))
         return newCell
     }
@@ -39,11 +54,29 @@ class ViewControllerWeekly: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        populateDayOfTheWeekArray()
-        //tableView.
+        self.weatherData = WeatherInfo.weatherData
+        
+//        for cell in cells {
+//            toggleUnit.addObserver(cell.high)
+//            toggleUnit.addObserver(cell.avg)
+//            toggleUnit.addObserver(cell.low)
+//        }
+        populateDayOfTheWeekArray()               // get the days of the weev for label
         // Do any additional setup after loading the view.
     }
     
+
+    // adds temp labels to listen for change of
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let cells = self.tableView.visibleCells as! Array<WeatherDayTableViewCell>
+                for cell in cells {
+                    toggleUnit.addObserver(cell.high)
+                    toggleUnit.addObserver(cell.avg)
+                    toggleUnit.addObserver(cell.low)
+                }
+        toggleUnit.isEnabled = true
+    }
 
     func populateDayOfTheWeekArray() {                         // get the first day of the week
         //return Calendar.current.component(.weekday, from: Date())
@@ -110,14 +143,40 @@ class ViewControllerWeekly: UIViewController, UITableViewDelegate, UITableViewDa
         dismiss(animated: true, completion: nil)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    @IBAction func switchMode(_ sender: Any) {
+        print("hey")
+        guard let tempMode = WeatherInfo.Temperature(rawValue: toggleUnit.selectedSegmentIndex) else {
+            fatalError("Unexpected toggleUnit.selectedSegmentIndex value")
+        }
+        PreferencesManager.shared.currentTempUnit = tempMode
+        switch (tempMode) {                  // switch to Farenheit
+            
+        case .Farenheit:
+            
+            self.weatherData!.currentDayData!.main.temp = self.weatherData!.currentDayData!.main.temp * (9/5) + 32
+            
+            for var element in self.weatherData!.fiveDayData! {      // convert all temps
+                print("cool")
+                element.main.temp = element.main.temp * (9/5) + 32
+                element.main.temp_min = element.main.temp_min * (9/5) + 32
+                element.main.temp_max = element.main.temp_max * (9/5) + 32
+            }
+            
+        case .Celsius:                                              // switch to Celcius
+            self.weatherData!.currentDayData!.main.temp = (self.weatherData!.currentDayData!.main.temp - 32) * (5/9)
+            for var element in self.weatherData!.fiveDayData! {      // convert all temps
+                print("woah")
+                element.main.temp = (element.main.temp - 32) * (5/9)
+                element.main.temp_min = (element.main.temp_min - 32) * (5/9)
+                element.main.temp_max = (element.main.temp_max - 32) * (5/9)
+            }
+        }
+        guard let weatherDataToSend: WeatherInfo = weatherData else {
+            fatalError("Weather Data not instantiated")
+        }
+        print(self.weatherData!.currentDayData!.main.temp)
+        toggleUnit.notifyObservers(toggleUnit.observers, weatherDataToSend)
     }
-    */
-
+    
 }

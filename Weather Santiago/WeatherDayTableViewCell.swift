@@ -14,9 +14,16 @@ class WeatherDayTableViewCell: UITableViewCell {
     
     @IBOutlet weak var weatherIcon: UIImageView!
     
-    @IBOutlet weak var high: UILabel!
-    @IBOutlet weak var avg: UILabel!
-    @IBOutlet weak var low: UILabel!
+    
+    @IBOutlet weak var high: UILabelCellObservable!
+    
+    
+    @IBOutlet weak var avg: UILabelCellObservable!
+    
+    
+    @IBOutlet weak var low: UILabelCellObservable!
+    
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
