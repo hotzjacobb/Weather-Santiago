@@ -21,6 +21,9 @@ class UILabelObserver: UILabel, Observer {
     }
     
     func update(_ weatherData: WeatherInfo) {
+        guard (weatherData.currentDayData != nil) else {
+            return
+        }
         self.text = String(Int((weatherData.currentDayData?.main.temp)!)) + "°"
     }
     

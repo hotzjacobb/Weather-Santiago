@@ -37,6 +37,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var weatherLabel: UILabel!
     
     
+    
     // Fields
     var daily = true
     var unit = Unit.Celcius
@@ -53,33 +54,17 @@ class ViewController: UIViewController {
             fatalError("Unexpected toggleUnit.selectedSegmentIndex value")
         }
         PreferencesManager.shared.currentTempUnit = tempMode
-        switch (tempMode) {                  // switch to Farenheit
+        switch (tempMode) {
             
-        case .Farenheit:
+        case .Farenheit:                                            // switch to Farenheit
+            self.weatherData!.currentDayData!.main.temp =                        self.weatherData!.currentDayData!.main.temp * (9/5) + 32
             
-            self.weatherData!.currentDayData!.main.temp = self.weatherData!.currentDayData!.main.temp * (9/5) + 32
-            
-//            for var element in self.weatherData!.fiveDayData! {      // convert all temps
-//                element.main.temp = element.main.temp * (9/5) + 32
-//                element.main.temp_min = element.main.temp_min * (9/5) + 32
-//                element.main.temp_max = element.main.temp_max * (9/5) + 32
-//            }
-            
-            // simple change to multiply temps; swift makes us copy the array; thus we use map
-//            self.weatherData!.fiveDayData = self.weatherData!.fiveDayData!.map({(day) -> FiveDayData in
-//                let high = day.main.temp_max * (9/5) + 32
-//                let avg = day.main.temp * (9/5) + 32
-//                let low = day.main.temp_min * (9/5) + 32
-//                let main = TempWrapperObj(temp: avg, temp_min: low, temp_max: high)
-//                let dayConverted = FiveDayData(weather: day.weather, main: main, dt_txt: day.dt_txt)
-//                return dayConverted})
-            
-            self.weatherData!.fiveDayData = self.weatherData!.fiveDayData!.map(weatherData!.celsiusToFarenheit)
+           self.weatherData!.fiveDayData = self.weatherData!.fiveDayData!.map(weatherData!.celsiusToFarenheit)
             
         case .Celsius:                                              // switch to Celcius
             self.weatherData!.currentDayData!.main.temp = (self.weatherData!.currentDayData!.main.temp - 32) * (5/9)
             
-            self.weatherData!.fiveDayData = self.weatherData!.fiveDayData!.map(weatherData!.farenheitToCelsius)
+     self.weatherData!.fiveDayData = self.weatherData!.fiveDayData!.map(weatherData!.farenheitToCelsius)
             
             // simple change to multiply temps; swift makes us copy the array; thus we use map
 //            self.weatherData!.fiveDayData = self.weatherData!.fiveDayData!.map({(day) -> FiveDayData in
@@ -168,7 +153,32 @@ class ViewController: UIViewController {
         }
     }
     
-   
+//    // Navigation
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if (segue.identifier == "transToWeek") {
+//            guard let weekView = segue.destination as? ViewControllerWeekly else {
+//                return
+//            }
+//            weekView.toggleUnit
+//        }
+//    }
+//    
+    
+    // Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "toDailySegue") {
+            guard let weeklyController = segue.destination as? ViewControllerWeekly else {
+                return;
+            }
+            weeklyController.toggleUnitSwitchValue = self.toggleUnit.selectedSegmentIndex
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        toggleUnit.notifyObservers(toggleUnit.observers, WeatherInfo.weatherData)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

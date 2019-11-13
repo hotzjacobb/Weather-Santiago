@@ -13,11 +13,20 @@ class ViewControllerWeekly: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var toggleUnit: UISegmentedControlObservable!
     
+    
+    @IBOutlet weak var dailyButton: UIButton!
+    
     var daysOfTheWeek = [String]()     // to be displayed on labels
+    
+    var observersNotAdded = true
     
     var weatherData: WeatherInfo?
     
     @IBOutlet weak var tableView: UITableView!
+    
+    var unitValueForUnwind: Int?
+    
+    var toggleUnitSwitchValue: Int?  // value passed to toggleUnit from daily view controller
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -55,27 +64,26 @@ class ViewControllerWeekly: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         self.weatherData = WeatherInfo.weatherData
-        
-//        for cell in cells {
-//            toggleUnit.addObserver(cell.high)
-//            toggleUnit.addObserver(cell.avg)
-//            toggleUnit.addObserver(cell.low)
-//        }
-        populateDayOfTheWeekArray()               // get the days of the weev for label
+        populateDayOfTheWeekArray()               // get the days of the week for label
         // Do any additional setup after loading the view.
+        self.toggleUnit.selectedSegmentIndex = toggleUnitSwitchValue!
     }
     
 
     // adds temp labels to listen for change of
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let cells = self.tableView.visibleCells as! Array<WeatherDayTableViewCell>
+        if (observersNotAdded) {                    // used to only add observers once
+        let cells = self.tableView.visibleCells as! Array<WeatherDayTableViewCell> // add observers
                 for cell in cells {
                     toggleUnit.addObserver(cell.high)
                     toggleUnit.addObserver(cell.avg)
                     toggleUnit.addObserver(cell.low)
                 }
+            observersNotAdded = false
+        }
         toggleUnit.isEnabled = true
+        self.toggleUnit.notifyObservers(toggleUnit.observers, WeatherInfo.weatherData) // make sure they display data in most recent unit
     }
 
     func populateDayOfTheWeekArray() {                         // get the first day of the week
@@ -139,9 +147,45 @@ class ViewControllerWeekly: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    @IBAction func unwindToCurrentForecast(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+    // Navigation functions
+    
+    // Used to pass the unit now in use to the Daily view
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        super.prepare(for: segue, sender: sender)
+//        guard let button = sender as? UIButton, button === dailyButton else {
+//            return   // the button was pressed was not the one to transition to daily
+//        }
+//        unitValueForUnwind = toggleUnit.selectedSegmentIndex
+//    }
+    
+//    @IBAction func unwindToCurrentForecast(sender: UIStoryboardSegue) {
+//        // change unit back
+//        self.toggleUnit.isEnabled = false
+//        guard let dailyViewController = sender.destination as? ViewController else {
+//            fatalError()
+//        }
+//        dismiss(animated: true, completion: nil)
+//    }
+    
+    
+//    override func willMove(toParent parent: UIViewController?) {  // back button pushed
+//        guard let parentVC = parent as? ViewController else {
+//            fatalError()
+//        }
+//        parentVC.toggleUnit.selectedSegmentIndex = self.toggleUnit.selectedSegmentIndex
+//    }
+//
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if (!(self.navigationController?.viewControllers.contains(self))!) { // I took this ingenious condition from William Jockusch on stackOverflow
+            // back button was pressed.  We know this is true because self is no longer in the navigation stack.
+            guard let dailyVC = navigationController?.visibleViewController as? ViewController else {
+                fatalError()
+            }
+            dailyVC.toggleUnit.selectedSegmentIndex = self.toggleUnit.selectedSegmentIndex // we can directly assign it as we know both are in memory
+        }
     }
+    
     
     
     @IBAction func switchMode(_ sender: Any) {
@@ -153,24 +197,17 @@ class ViewControllerWeekly: UIViewController, UITableViewDelegate, UITableViewDa
         switch (tempMode) {                  // switch to Farenheit
             
         case .Farenheit:
-            
+            // Switch to Farenheit
             self.weatherData!.currentDayData!.main.temp = self.weatherData!.currentDayData!.main.temp * (9/5) + 32
             
-            for var element in self.weatherData!.fiveDayData! {      // convert all temps
-                print("cool")
-                element.main.temp = element.main.temp * (9/5) + 32
-                element.main.temp_min = element.main.temp_min * (9/5) + 32
-                element.main.temp_max = element.main.temp_max * (9/5) + 32
-            }
+            self.weatherData!.fiveDayData = self.weatherData!.fiveDayData!.map(weatherData!.celsiusToFarenheit)
             
-        case .Celsius:                                              // switch to Celcius
+            
+        case .Celsius:
+            // switch to Celsius
             self.weatherData!.currentDayData!.main.temp = (self.weatherData!.currentDayData!.main.temp - 32) * (5/9)
-            for var element in self.weatherData!.fiveDayData! {      // convert all temps
-                print("woah")
-                element.main.temp = (element.main.temp - 32) * (5/9)
-                element.main.temp_min = (element.main.temp_min - 32) * (5/9)
-                element.main.temp_max = (element.main.temp_max - 32) * (5/9)
-            }
+            
+            self.weatherData!.fiveDayData = self.weatherData!.fiveDayData!.map(weatherData!.farenheitToCelsius)
         }
         guard let weatherDataToSend: WeatherInfo = weatherData else {
             fatalError("Weather Data not instantiated")

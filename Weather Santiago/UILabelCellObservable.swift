@@ -31,9 +31,10 @@ class UILabelCellObservable: UILabel, Observer {
     }
     
     func update(_ weatherData: WeatherInfo) {
+        print("update called")
         switch self.category {
         case .high?:
-            self.text = String(Int((weatherData.fiveDayData?[index!].main.temp_max)!))
+            self.text = String(Int((WeatherInfo.weatherData.fiveDayData?[index!].main.temp_max)!))
         case .avg?:
             self.text = String(Int((weatherData.fiveDayData?[index!].main.temp)!))
         case .low?:

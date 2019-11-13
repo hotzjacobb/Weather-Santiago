@@ -66,7 +66,7 @@
                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                         </state>
                                         <connections>
-                                            <segue destination="ECx-95-f3I" kind="presentation" id="Vrt-Jo-XVS"/>
+                                            <segue destination="PIN-sD-P0e" kind="show" identifier="toDailySegue" id="E2Y-TB-JJU"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -166,7 +166,7 @@
                                         </subviews>
                                     </stackView>
                                     <tableView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1uG-g8-dyV">
-                                        <rect key="frame" x="0.0" y="41" width="414" height="641"/>
+                                        <rect key="frame" x="0.0" y="41" width="414" height="713"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Daily Forecast" rowHeight="133" id="n0L-XO-v0E" customClass="WeatherDayTableViewCell" customModule="Weather_Santiago" customModuleProvider="target">
@@ -235,15 +235,6 @@
                                             <outlet property="delegate" destination="PIN-sD-P0e" id="rtX-AO-3r9"/>
                                         </connections>
                                     </tableView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4CR-d4-dr7">
-                                        <rect key="frame" x="190" y="695" width="34" height="59"/>
-                                        <state key="normal" title="Daily">
-                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="unwindToCurrentForecast:" destination="PIN-sD-P0e" eventType="touchUpInside" id="Ygz-f1-CAh"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="Mri-DB-HZ5" firstAttribute="top" secondItem="ByN-ex-L1V" secondAttribute="top" id="PYE-hQ-CUd"/>
@@ -289,24 +280,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cfl-TV-0XO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1957.9710144927537" y="101.78571428571428"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="mEA-V5-aam">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ECx-95-f3I" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="n5e-Xo-aje">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="PIN-sD-P0e" kind="relationship" relationship="rootViewController" id="yZJ-uV-sh7"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="iGq-3j-ON2" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3644.9275362318845" y="101.78571428571428"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
