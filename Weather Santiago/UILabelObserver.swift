@@ -21,7 +21,7 @@ class UILabelObserver: UILabel, Observer {
     }
     
     func update(_ weatherData: WeatherInfo) {
-        guard (weatherData.currentDayData != nil) else {
+        guard (weatherData.currentDayData != nil) else {     // when ViewController first appears this is necessary to avoid a crash
             return
         }
         self.text = String(Int((weatherData.currentDayData?.main.temp)!)) + "°"

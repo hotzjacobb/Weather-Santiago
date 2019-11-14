@@ -113,7 +113,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X4I-mq-2bc">
                                 <rect key="frame" x="20" y="108" width="374" height="754"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">Weather Santiago was created by Jacob Hotz. When not behind a computer, you can find Jacob cooking, TAing, or running. Jacob's currently on exchange in Santiago, Chile.</string>
+                                <mutableString key="text">Weather Santiago was created by Jacob Hotz. When not behind a computer, you can find Jacob cooking, TAing, or running. Jacob's currently on exchange in Santiago, Chile. Jacob would like to thank Alec Cooks, Andrew Neel, Annie Spratt, Ben Sauer, Benjamin Parker, Clint Mckoy, Danielle Dolson, Aissa Daoudi, Jakob Owens, Joonas Slid, Nick Nice, Ronald Yang, Sakib Sadman and Sean Pierce. Those folks took the lovely photos that this app uses. Their work can be found on the site Unsplash. Jacob would also like to thank his friend Andrea Gottardo for his support.</mutableString>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
