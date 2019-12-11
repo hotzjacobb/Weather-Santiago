@@ -7,16 +7,12 @@
 //
 
 import UIKit
+import CoreLocation
 
-// Struct that encompasses data from both the daily and five-day forecast
-//struct WeatherInfo {                        // TODO: change to class; singleton
-//    var currentDayData: WeatherDataTemp?
-//    var fiveDayData: [FiveDayData]?
-//}
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CLLocationManagerDelegate {
     
-    //let bundle = Bundle(for: type(of: self))    // bundle for weather icons
+    let locationManager: CLLocationManager = CLLocationManager()
     
     
     @IBOutlet weak var tempLabel: UILabelObserver!
@@ -47,8 +43,6 @@ class ViewController: UIViewController {
 
     
   
-    
-    
     @IBAction func switchUnits(_ sender: UISegmentedControl) {
         guard let tempMode = WeatherInfo.Temperature(rawValue: toggleUnit.selectedSegmentIndex) else {
             fatalError("Unexpected toggleUnit.selectedSegmentIndex value")
@@ -66,14 +60,6 @@ class ViewController: UIViewController {
             
      self.weatherData!.fiveDayData = self.weatherData!.fiveDayData!.map(weatherData!.farenheitToCelsius)
             
-            // simple change to multiply temps; swift makes us copy the array; thus we use map
-//            self.weatherData!.fiveDayData = self.weatherData!.fiveDayData!.map({(day) -> FiveDayData in
-//                let high = (day.main.temp_max - 32) * (5/9)
-//                let avg = (day.main.temp - 32) * (5/9)
-//                let low = (day.main.temp_min - 32) * (5/9)
-//                let main = TempWrapperObj(temp: avg, temp_min: low, temp_max: high)
-//                let dayConverted = FiveDayData(weather: day.weather, main: main, dt_txt: day.dt_txt)
-//                return dayConverted})
             
         }
         guard let weatherDataToSend: WeatherInfo = weatherData else {
@@ -153,16 +139,6 @@ class ViewController: UIViewController {
         }
     }
     
-//    // Navigation
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if (segue.identifier == "transToWeek") {
-//            guard let weekView = segue.destination as? ViewControllerWeekly else {
-//                return
-//            }
-//            weekView.toggleUnit
-//        }
-//    }
-//    
     
     // Navigation
     
@@ -187,6 +163,77 @@ class ViewController: UIViewController {
         toggleUnit.addObserver(tempLabel)
         toggleUnit.selectedSegmentIndex = PreferencesManager.shared.currentTempUnit.rawValue
         self.weatherData = WeatherInfo.weatherData
+        
+        checkLocationPermissions()
+        
+    }
+
+    // Location permissions
+    func checkLocationPermissions() {
+        if (CLLocationManager.locationServicesEnabled()) {  // does the user have access to location services
+            switch CLLocationManager.authorizationStatus() {
+            case .notDetermined:
+                // Request when-in-use authorization initially
+                // This is the first and the ONLY time you will be able to ask the user for permission
+                locationManager.delegate = self
+                locationManager.requestWhenInUseAuthorization()
+                break
+
+            case .restricted, .denied:
+                // Disable location features
+                onLocationDisabled()
+            case .authorizedWhenInUse, .authorizedAlways:
+                // we can make the request as the user previously authorized location services
+                weatherHandlerHelper()
+                print("Full Access")
+                break
+
+            default:
+                fatalError("Unexpected Switch case")
+            }
+        } else {
+            // fail gracefully due to no location services
+            // TODO
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .notDetermined:
+            locationManager.delegate = self
+            locationManager.requestWhenInUseAuthorization()
+        case .authorizedWhenInUse:
+            weatherHandlerHelper()
+        case .denied, .restricted:
+            onLocationDisabled()
+        default:
+            fatalError("Unexpected authorization value")
+        }
+        }
+    
+    // Location disabled helper
+    func onLocationDisabled() {
+        // Sends an alert to the user asking them to enable location services
+        let alert = UIAlertController(title: "Allow Location Access", message: "Weather Santiago needs access to your location. Turn on Location Services in your device settings.", preferredStyle: UIAlertController.Style.alert)
+        
+        // Button to Open Settings
+        alert.addAction(UIAlertAction(title: "Settings", style: UIAlertAction.Style.default, handler: { action in
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                return
+            }
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
+                    print("Settings opened: \(success)")
+                })
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
+    // Calls the function to make API req. and handles the callback
+    func weatherHandlerHelper() {
         let weatherReq = WeatherRequest(PreferencesManager.shared.currentTempUnit)
         weatherReq.getCurrentWeather { [weak self] result in         // tell Swift garbage collection if view dismissed -> free memory
             switch result {
@@ -208,7 +255,7 @@ class ViewController: UIViewController {
                 }
             }
         }
-      weatherReq.getFiveDayWeather { [weak self] result in         // tell Swift garbage collection if view dismissed -> free memory
+        weatherReq.getFiveDayWeather { [weak self] result in         // tell Swift garbage collection if view dismissed -> free memory
             switch result {
             case .failure(let error):
                 print(error)
@@ -221,9 +268,7 @@ class ViewController: UIViewController {
             }
         }
         
-        
     }
-
 
 }
 
