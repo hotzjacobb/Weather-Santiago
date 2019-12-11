@@ -184,7 +184,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 onLocationDisabled()
             case .authorizedWhenInUse, .authorizedAlways:
                 // we can make the request as the user previously authorized location services
-                weatherHandlerHelper()
+                locationManager.requestLocation()
+                //weatherHandlerHelper()
                 print("Full Access")
                 break
 
@@ -203,7 +204,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             locationManager.delegate = self
             locationManager.requestWhenInUseAuthorization()
         case .authorizedWhenInUse:
-            weatherHandlerHelper()
+            locationManager.requestLocation()
+        //weatherHandlerHelper()
         case .denied, .restricted:
             onLocationDisabled()
         default:
@@ -231,10 +233,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         self.present(alert, animated: true, completion: nil)
     }
     
+    //Location successfully retrieved
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        weatherHandlerHelper(lat: locations[locations.count-1].coordinate.latitude, lon: locations[locations.count-1].coordinate.longitude)
+    }
+    
+    //Error when retrieving location
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        // Sends an alert to the user informint them of an error
+        let alert = UIAlertController(title: "Error in retrieving action", message: "There was an error in retrieving your location. You can try again by closing the application and reopening it", preferredStyle: UIAlertController.Style.alert)
+        // Button to dismiss the notice
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     
     // Calls the function to make API req. and handles the callback
-    func weatherHandlerHelper() {
-        let weatherReq = WeatherRequest(PreferencesManager.shared.currentTempUnit)
+    func weatherHandlerHelper(lat: Double, lon: Double) {
+        let weatherReq = WeatherRequest(PreferencesManager.shared.currentTempUnit, lat, lon)
         weatherReq.getCurrentWeather { [weak self] result in         // tell Swift garbage collection if view dismissed -> free memory
             switch result {
             case .failure(let error):
