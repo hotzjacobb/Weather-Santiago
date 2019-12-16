@@ -16,6 +16,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     
     @IBOutlet weak var tempLabel: UILabelObserver!
+    @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var toggleMode: UIButton!
     
   
@@ -23,6 +24,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     
     @IBOutlet weak var weatherImageBackground: UIImageView!
+    
     
     
     enum LoadingMessage: String {
@@ -171,11 +173,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     // Location permissions
     func checkLocationPermissions() {
         if (CLLocationManager.locationServicesEnabled()) {  // does the user have access to location services
+            locationManager.delegate = self  // this class gets location callback
             switch CLLocationManager.authorizationStatus() {
             case .notDetermined:
                 // Request when-in-use authorization initially
                 // This is the first and the ONLY time you will be able to ask the user for permission
-                locationManager.delegate = self
                 locationManager.requestWhenInUseAuthorization()
                 break
 
@@ -205,7 +207,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             locationManager.requestWhenInUseAuthorization()
         case .authorizedWhenInUse:
             locationManager.requestLocation()
-        //weatherHandlerHelper()
         case .denied, .restricted:
             onLocationDisabled()
         default:
@@ -267,6 +268,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 DispatchQueue.main.async {                     // UI must be changed from main thread otherwise threads contradict each other
                     self?.tempLabel.text = tempFormattedString  + "°"
                     self?.weatherLabel.text = currentWeatherText
+                    self?.cityLabel.text = currentDay?.name            // the city's name
                     self?.displayAppropriatePhoto(weatherID)           // called last as it loads all the images in
                 }
             }

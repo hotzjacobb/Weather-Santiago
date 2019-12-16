@@ -49,10 +49,12 @@ struct WeatherRequest {
                 return
             }
             do {
-                //let jsonResp = try JSONSerialization.jsonObject(with: jsonDataDaily, options: [])
+                let jsonResp = try JSONSerialization.jsonObject(with: jsonDataDaily, options: [])
+                print(jsonResp)
                 let decoder = JSONDecoder()
                 let weatherResponse = try decoder.decode(WeatherDataTemp.self, from: jsonDataDaily)
                 let weatherCurrent = weatherResponse
+                print(weatherResponse)
                 completion(.success(weatherCurrent))
             } catch {
                 print(error)
@@ -70,7 +72,7 @@ struct WeatherRequest {
                 return
             }
             do {
-                let jsonResp = try JSONSerialization.jsonObject(with: jsonDataDaily, options: [])
+//                let jsonResp = try JSONSerialization.jsonObject(with: jsonDataDaily, options: [])
                 let decoder = JSONDecoder()
                 let weatherResponse = try decoder.decode(FiveDayDataWrapper.self, from: jsonDataDaily)
                 var weatherList = weatherResponse.list

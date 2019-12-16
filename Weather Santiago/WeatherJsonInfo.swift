@@ -11,8 +11,9 @@ import Foundation
 
 
 struct WeatherDataTemp:Decodable {
+    var name: String            // the city's name
     var weather: [WeatherData]
-    var main: TempWrapperObj // the temperature in the user's unit of choice; if the user changes the temperature the app calculates the difference without another lookup
+    var main: TempWrapperObj    // the temperature in the user's unit of choice; if the user changes the temperature the app calculates the difference without another lookup
 }
 
 
@@ -26,6 +27,11 @@ struct WeatherData:Decodable {
 
 struct FiveDayDataWrapper:Decodable {
     var list: [FiveDayData]
+    var city: CityNameWrapper
+}
+
+struct CityNameWrapper:Decodable {
+    var name: String
 }
 
 struct FiveDayData:Decodable {
@@ -100,6 +106,6 @@ private func averagedDay(_ dayArray: [FiveDayData]) -> FiveDayData {
         avgTemp += element.main.temp
     }
     avgTemp = avgTemp / Double(dayArray.count)   // now the average of the temperatures
-    /*let calculatedDay = FiveDayData(weather: [WeatherData(id: medianForecast.id, main: medianForecast.main, description: medianForecast.description, icon: medianForecast.icon)], main: TempWrapperObj(temp: avgTemp, temp_min: lowTemp, temp_max: highTemp), dt_txt: arrayOfDayArrays[dayIndex][0].dt_txt)    // note: to get the weather description we take the values from the "median" pregúntale a Andrea si el compilador optimiza esto */
+    /*let calculatedDay = FiveDayData(weather: [WeatherData(id: medianForecast.id, main: medianForecast.main, description: medianForecast.description, icon: medianForecast.icon)], main: TempWrapperObj(temp: avgTemp, temp_min: lowTemp, temp_max: highTemp), dt_txt: arrayOfDayArrays[dayIndex][0].dt_txt)    // note: to get the weather description we take the values from the "median" */
     return FiveDayData(weather: [WeatherData(id: medianForecast.id, main: medianForecast.main, description: medianForecast.description, icon: medianForecast.icon)], main: TempWrapperObj(temp: avgTemp, temp_min: lowTemp, temp_max: highTemp), dt_txt: dayArray[0].dt_txt)  // note: to get the weather description we take the values from the "median"
 }

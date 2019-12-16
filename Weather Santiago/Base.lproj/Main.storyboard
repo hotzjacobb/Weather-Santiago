@@ -45,7 +45,7 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="100" translatesAutoresizingMaskIntoConstraints="NO" id="Svj-FB-6w8">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="Svj-FB-6w8">
                                 <rect key="frame" x="60" y="271" width="294" height="502"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Anq-4i-mbl" customClass="UILabelObserver" customModule="Weather_Santiago" customModuleProvider="target">
@@ -55,13 +55,19 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="olq-Uo-Hsv">
-                                        <rect key="frame" x="0.0" y="168" width="294" height="50"/>
+                                        <rect key="frame" x="0.0" y="128" width="294" height="50"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IAI-y3-U8t">
+                                        <rect key="frame" x="122" y="238" width="50" height="50"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CEc-Je-5XD">
-                                        <rect key="frame" x="122" y="318" width="50" height="184"/>
+                                        <rect key="frame" x="122" y="348" width="50" height="154"/>
                                         <state key="normal" title="Weekly">
                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                         </state>
@@ -91,6 +97,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Weather Santiago" id="w3w-gF-LfQ"/>
                     <connections>
+                        <outlet property="cityLabel" destination="IAI-y3-U8t" id="RGn-5l-ldP"/>
                         <outlet property="tempLabel" destination="Anq-4i-mbl" id="gcB-lg-gcE"/>
                         <outlet property="toggleMode" destination="CEc-Je-5XD" id="08R-Vi-WCd"/>
                         <outlet property="toggleUnit" destination="gBZ-AS-F4Y" id="JOp-2z-pJX"/>
@@ -113,7 +120,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X4I-mq-2bc">
                                 <rect key="frame" x="20" y="108" width="374" height="754"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Weather Santiago was created by Jacob Hotz. When not behind a computer, you can find Jacob cooking, TAing, or running. Jacob's currently on exchange in Santiago, Chile. Jacob would like to thank Alec Cooks, Andrew Neel, Annie Spratt, Ben Sauer, Benjamin Parker, Clint Mckoy, Danielle Dolson, Aissa Daoudi, Jakob Owens, Joonas Slid, Nick Nice, Ronald Yang, Sakib Sadman and Sean Pierce. Those folks took the lovely photos that this app uses. Their work can be found on the site Unsplash. Jacob would also like to thank his friend Andrea Gottardo for his support.</mutableString>
+                                <string key="text">Weather Santiago was created by Jacob Hotz. When not behind a computer, you can find Jacob cooking, TAing, or running. Jacob's currently on exchange in Santiago, Chile. Jacob would like to thank Alec Cooks, Andrew Neel, Annie Spratt, Ben Sauer, Benjamin Parker, Clint Mckoy, Danielle Dolson, Aissa Daoudi, Jakob Owens, Joonas Slid, Nick Nice, Ronald Yang, Sakib Sadman and Sean Pierce. Those folks took the lovely photos that this app uses. Their work can be found on the site Unsplash. Jacob would also like to thank his friend Andrea Gottardo for his support.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -283,6 +290,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ODV-IT-3Hb"/>
+        <segue reference="5Ub-Ng-AVx"/>
     </inferredMetricsTieBreakers>
 </document>
