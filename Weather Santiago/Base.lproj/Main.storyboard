@@ -120,14 +120,21 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X4I-mq-2bc">
                                 <rect key="frame" x="20" y="108" width="374" height="754"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">Weather Santiago was created by Jacob Hotz. When not behind a computer, you can find Jacob cooking, TAing, or running. Jacob's currently on exchange in Santiago, Chile. Jacob would like to thank Alec Cooks, Andrew Neel, Annie Spratt, Ben Sauer, Benjamin Parker, Clint Mckoy, Danielle Dolson, Aissa Daoudi, Jakob Owens, Joonas Slid, Nick Nice, Ronald Yang, Sakib Sadman and Sean Pierce. Those folks took the lovely photos that this app uses. Their work can be found on the site Unsplash. Jacob would also like to thank his friend Andrea Gottardo for his support.</string>
+                                <string key="text">Weather Santiago was created by Jacob Hotz. When not behind a computer, you can find Jacob cooking, TAing, or running. Jacob's currently on exchange in Santiago, Chile. Jacob would like to thank Alec Cooks, Andrew Neel, Annie Spratt, Ben Sauer, Benjamin Parker, Clint Mckoy, Danielle Dolson, Aissa Daoudi, Jakob Owens, Joonas Slid, Nick Nice, Ronald Yang, Fabian Grohs, Sakib Sadman and Sean Pierce. Those folks took the lovely photos that this app uses. Their work can be found on the site Unsplash. Jacob would also like to thank his friend Andrea Gottardo for his support.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.11" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fabian-grohs-XMFZqrGyV-Q-unsplash" translatesAutoresizingMaskIntoConstraints="NO" id="daN-VO-RN7">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="nE2-uJ-GY2" firstAttribute="trailing" secondItem="daN-VO-RN7" secondAttribute="trailing" id="75E-V9-XEP"/>
+                            <constraint firstItem="daN-VO-RN7" firstAttribute="top" secondItem="nE2-uJ-GY2" secondAttribute="top" id="9Fe-YV-dLS"/>
                             <constraint firstItem="nE2-uJ-GY2" firstAttribute="trailing" secondItem="X4I-mq-2bc" secondAttribute="trailing" constant="20" id="ES9-4S-YHH"/>
+                            <constraint firstItem="daN-VO-RN7" firstAttribute="leading" secondItem="nE2-uJ-GY2" secondAttribute="leading" id="FPX-DM-TnY"/>
+                            <constraint firstItem="nE2-uJ-GY2" firstAttribute="bottom" secondItem="daN-VO-RN7" secondAttribute="bottom" id="HFY-z4-XpK"/>
                             <constraint firstItem="X4I-mq-2bc" firstAttribute="top" secondItem="nE2-uJ-GY2" secondAttribute="top" constant="20" id="MgT-KO-FrQ"/>
                             <constraint firstItem="X4I-mq-2bc" firstAttribute="leading" secondItem="nE2-uJ-GY2" secondAttribute="leading" constant="20" id="Rbg-ZP-d8V"/>
                             <constraint firstItem="nE2-uJ-GY2" firstAttribute="bottom" secondItem="X4I-mq-2bc" secondAttribute="bottom" id="tZj-q6-Mg5"/>
@@ -289,6 +296,9 @@
             <point key="canvasLocation" x="1957.9710144927537" y="101.78571428571428"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="fabian-grohs-XMFZqrGyV-Q-unsplash" width="5057" height="3911"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="5Ub-Ng-AVx"/>
     </inferredMetricsTieBreakers>
