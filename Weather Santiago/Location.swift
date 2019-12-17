@@ -12,46 +12,33 @@
 //
 //class Location: NSObject, CLLocationManagerDelegate {
 //    
-//
+//    let locationManager: CLLocationManager;
+//    let vc: ViewController;
 //    
 //    // constructor
 //    private override init() {
+//        self.vc = 
+//        self.locationManager = CLLocationManager()
 //        super.init()
-//        static let locationManager: CLLocationManager = CLLocationManager()
 //    }
+//    
+//    static let shared = Location()
 //    
 //    
 //    // Location permissions
 //    func checkLocationPermissions() {
 //        if (CLLocationManager.locationServicesEnabled()) {  // does the user have access to location services
+//            locationManager.delegate = self  // this class gets location callback
 //            switch CLLocationManager.authorizationStatus() {
 //            case .notDetermined:
 //                // Request when-in-use authorization initially
 //                // This is the first and the ONLY time you will be able to ask the user for permission
-//                locationManager.delegate = self
 //                locationManager.requestWhenInUseAuthorization()
 //                break
 //                
 //            case .restricted, .denied:
 //                // Disable location features
-//                let alert = UIAlertController(title: "Allow Location Access", message: "Weather Santiago needs access to your location. Turn on Location Services in your device settings.", preferredStyle: UIAlertController.Style.alert)
-//                
-//                // Button to Open Settings
-//                alert.addAction(UIAlertAction(title: "Settings", style: UIAlertAction.Style.default, handler: { action in
-//                    guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
-//                        return
-//                    }
-//                    if UIApplication.shared.canOpenURL(settingsUrl) {
-//                        UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
-//                            print("Settings opened: \(success)")
-//                        })
-//                    }
-//                }))
-//                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-//                self.present(alert, animated: true, completion: nil)
-//                
-//                break
-//                
+//                onLocationDisabled()
 //            case .authorizedWhenInUse, .authorizedAlways:
 //                // we can make the request as the user previously authorized location services
 //                weatherHandlerHelper()
@@ -69,31 +56,30 @@
 //    
 //    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 //        switch status {
+//        case .notDetermined:
+//            //locationManager.delegate = self
+//            locationManager.requestWhenInUseAuthorization()
 //        case .authorizedWhenInUse:
-//            weatherHandlerHelper()
+//            locationManager.requestLocation()
 //        case .denied, .restricted:
-//            onLocationDisabled()
+//            ViewController.onLocationDisabled()
 //        default:
 //            fatalError("Unexpected authorization value")
 //        }
 //    }
 //    
-//    // Location disabled helper
-//    func onLocationDisabled() {
-//        // Sends an alert to the user asking them to enable location services
-//        let alert = UIAlertController(title: "Allow Location Access", message: "Weather Santiago needs access to your location. Turn on Location Services in your device settings.", preferredStyle: UIAlertController.Style.alert)
-//        
-//        // Button to Open Settings
-//        alert.addAction(UIAlertAction(title: "Settings", style: UIAlertAction.Style.default, handler: { action in
-//            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
-//                return
-//            }
-//            if UIApplication.shared.canOpenURL(settingsUrl) {
-//                UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
-//                    print("Settings opened: \(success)")
-//                })
-//            }
-//        }))
+//    
+//    //Location successfully retrieved
+//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        weatherHandlerHelper(lat: locations[locations.count-1].coordinate.latitude, lon: locations[locations.count-1].coordinate.longitude)
 //    }
 //    
+//    //Error when retrieving location
+//    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+//        // Sends an alert to the user informint them of an error
+//        let alert = UIAlertController(title: "Error in retrieving action", message: "There was an error in retrieving your location. You can try again by closing the application and reopening it", preferredStyle: UIAlertController.Style.alert)
+//        // Button to dismiss the notice
+//        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+//        self.present(alert, animated: true, completion: nil)
+//    }
 //}

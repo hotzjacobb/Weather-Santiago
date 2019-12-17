@@ -11,9 +11,8 @@ import CoreLocation
 
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
-    
-    let locationManager: CLLocationManager = CLLocationManager()
-    
+
+    //let locationManager: CLLocationManager = CLLocationManager()
     
     @IBOutlet weak var tempLabel: UILabelObserver!
     @IBOutlet weak var cityLabel: UILabel!
@@ -173,7 +172,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     // Location permissions
     func checkLocationPermissions() {
         if (CLLocationManager.locationServicesEnabled()) {  // does the user have access to location services
-            locationManager.delegate = self  // this class gets location callback
+            //locationManager.delegate = self  // this class gets location callback
             switch CLLocationManager.authorizationStatus() {
             case .notDetermined:
                 // Request when-in-use authorization initially
@@ -186,8 +185,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 onLocationDisabled()
             case .authorizedWhenInUse, .authorizedAlways:
                 // we can make the request as the user previously authorized location services
-                locationManager.requestLocation()
-                //weatherHandlerHelper()
+                weatherHandlerHelper()
                 print("Full Access")
                 break
 
@@ -203,7 +201,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
         case .notDetermined:
-            locationManager.delegate = self
+            //locationManager.delegate = self
             locationManager.requestWhenInUseAuthorization()
         case .authorizedWhenInUse:
             locationManager.requestLocation()
@@ -214,7 +212,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
         }
     
-    // Location disabled helper
+    // Ask user to enable location through on-screen prompts
     func onLocationDisabled() {
         // Sends an alert to the user asking them to enable location services
         let alert = UIAlertController(title: "Allow Location Access", message: "Weather Santiago needs access to your location. Turn on Location Services in your device settings.", preferredStyle: UIAlertController.Style.alert)
