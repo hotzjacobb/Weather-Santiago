@@ -481,6 +481,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LUN6SJ3R4F;
 				INFOPLIST_FILE = "Weather Santiago/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -498,6 +499,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LUN6SJ3R4F;
 				INFOPLIST_FILE = "Weather Santiago/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

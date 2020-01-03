@@ -29,6 +29,7 @@ class ViewControllerWeekly: UIViewController, UITableViewDelegate, UITableViewDa
     var toggleUnitSwitchValue: Int?  // value passed to toggleUnit from daily view controller
     
     
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
@@ -51,6 +52,7 @@ class ViewControllerWeekly: UIViewController, UITableViewDelegate, UITableViewDa
         newCell.avg.index = indexPath.row
         
         newCell.weatherIcon.image = displayAppropriateIcon(((WeatherInfo.weatherData.fiveDayData?[indexPath.row].weather[0].id)!))
+        // newCell.dayOfTheWeek.sizeToFit()       // size to display all text
         return newCell
     }
     
@@ -147,34 +149,6 @@ class ViewControllerWeekly: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    // Navigation functions
-    
-    // Used to pass the unit now in use to the Daily view
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        super.prepare(for: segue, sender: sender)
-//        guard let button = sender as? UIButton, button === dailyButton else {
-//            return   // the button was pressed was not the one to transition to daily
-//        }
-//        unitValueForUnwind = toggleUnit.selectedSegmentIndex
-//    }
-    
-//    @IBAction func unwindToCurrentForecast(sender: UIStoryboardSegue) {
-//        // change unit back
-//        self.toggleUnit.isEnabled = false
-//        guard let dailyViewController = sender.destination as? ViewController else {
-//            fatalError()
-//        }
-//        dismiss(animated: true, completion: nil)
-//    }
-    
-    
-//    override func willMove(toParent parent: UIViewController?) {  // back button pushed
-//        guard let parentVC = parent as? ViewController else {
-//            fatalError()
-//        }
-//        parentVC.toggleUnit.selectedSegmentIndex = self.toggleUnit.selectedSegmentIndex
-//    }
-//
     
     override func viewWillDisappear(_ animated: Bool) {
         if (!(self.navigationController?.viewControllers.contains(self))!) { // I took this ingenious condition from William Jockusch on stackOverflow
