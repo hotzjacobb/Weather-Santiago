@@ -93,7 +93,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     // given the weatherID from the JSON; picks, loads, and displays the proper photo
-    private func displayAppropriatePhoto(_ weatherID: Int) {
+    func displayAppropriatePhoto(_ weatherID: Int) {
         let bundle = Bundle(for: type(of: self))    // we'll load images in
         let weatherLeadingDigit = weatherID / 100            // as defined by the api weatherID is a three digit number;
         weatherImageBackground.contentMode = UIView.ContentMode.scaleAspectFill // strech image to screen size
@@ -166,55 +166,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         toggleUnit.selectedSegmentIndex = PreferencesManager.shared.currentTempUnit.rawValue
         self.weatherData = WeatherInfo.weatherData
         
-        checkLocationPermissions()
+        Location.shared.checkLocationPermissions(vc: self)
         
     }
 
-    // Location permissions
-    func checkLocationPermissions() {
-        if (CLLocationManager.locationServicesEnabled()) {  // does the user have access to location services
-            locationManager.delegate = self  // this class gets location callback
-            switch CLLocationManager.authorizationStatus() {
-            case .notDetermined:
-                // Request when-in-use authorization initially
-                // This is the first and the ONLY time you will be able to ask the user for permission
-                locationManager.requestWhenInUseAuthorization()
-                break
-
-            case .restricted, .denied:
-                // Disable location features
-                onLocationDisabled()
-            case .authorizedWhenInUse, .authorizedAlways:
-                // we can make the request as the user previously authorized location services
-                locationManager.requestLocation()
-                //weatherHandlerHelper()
-                print("Full Access")
-                break
-
-            default:
-                fatalError("Unexpected Switch case")
-            }
-        } else {
-            // fail gracefully due to no location services
-            // TODO
-        }
-    }
     
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        switch status {
-        case .notDetermined:
-            locationManager.delegate = self
-            locationManager.requestWhenInUseAuthorization()
-        case .authorizedWhenInUse:
-            locationManager.requestLocation()
-        case .denied, .restricted:
-            onLocationDisabled()
-        default:
-            fatalError("Unexpected authorization value")
-        }
-        }
-    
-    // Location disabled helper
+    // Location disabled helper for the main view to give an alert
     func onLocationDisabled() {
         // Sends an alert to the user asking them to enable location services
         let alert = UIAlertController(title: "Allow Location Access", message: "Weather Santiago needs access to your location. Turn on Location Services in your device settings.", preferredStyle: UIAlertController.Style.alert)
@@ -234,59 +191,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         self.present(alert, animated: true, completion: nil)
     }
     
-    //Location successfully retrieved
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        weatherHandlerHelper(lat: locations[locations.count-1].coordinate.latitude, lon: locations[locations.count-1].coordinate.longitude)
-    }
-    
-    //Error when retrieving location
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        // Sends an alert to the user informint them of an error
-        let alert = UIAlertController(title: "Error in retrieving action", message: "There was an error in retrieving your location. You can try again by closing the application and reopening it", preferredStyle: UIAlertController.Style.alert)
-        // Button to dismiss the notice
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
     
     
-    // Calls the function to make API req. and handles the callback
-    func weatherHandlerHelper(lat: Double, lon: Double) {
-        let weatherReq = WeatherRequest(PreferencesManager.shared.currentTempUnit, lat, lon)
-        weatherReq.getCurrentWeather { [weak self] result in         // tell Swift garbage collection if view dismissed -> free memory
-            switch result {
-            case .failure(let error):
-                print(error)
-            case .success(let weatherCurrent):
-                self?.weatherData?.currentDayData = weatherCurrent
-                let currentDay = self!.weatherData?.currentDayData!
-                print("%f", (currentDay?.main.temp)!)
-                let tempFormattedString = String(Int((currentDay?.main.temp)!))
-                let currentWeatherText: String = (currentDay?.weather[0].description)!
-                guard let weatherID = currentDay?.weather[0].id else {
-                    fatalError("no id for weather")
-                }
-                DispatchQueue.main.async {                     // UI must be changed from main thread otherwise threads contradict each other
-                    self?.tempLabel.text = tempFormattedString  + "°"
-                    self?.weatherLabel.text = currentWeatherText
-                    self?.cityLabel.text = currentDay?.name            // the city's name
-                    self?.displayAppropriatePhoto(weatherID)           // called last as it loads all the images in
-                }
-            }
-        }
-        weatherReq.getFiveDayWeather { [weak self] result in         // tell Swift garbage collection if view dismissed -> free memory
-            switch result {
-            case .failure(let error):
-                print(error)
-            case .success(let weatherFiveDay):
-                DispatchQueue.main.async {                     // Allow to switch now that we have all the data
-                    self?.toggleMode.isEnabled = true
-                    self?.toggleUnit.isEnabled = true
-                }
-                self?.weatherData?.fiveDayData = weatherFiveDay
-            }
-        }
-        
-    }
-
+    
 }
 

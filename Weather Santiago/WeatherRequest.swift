@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 public enum Unit {
     case Celcius
@@ -40,6 +41,50 @@ struct WeatherRequest {
     guard let createUrlFive = URL(string: requestStringFive) else {fatalError()}
     requestURLFive = createUrlFive
 }
+    
+    // Calls the function to make API req. and handles the callback
+    static func weatherHandlerHelper(lat: Double, lon: Double, weatherData: WeatherInfo) {
+        let weatherReq = WeatherRequest(PreferencesManager.shared.currentTempUnit, lat, lon)
+        weatherReq.getCurrentWeather { result in         // tell Swift garbage collection if view dismissed -> free memory
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let weatherCurrent):
+                weatherData.currentDayData = weatherCurrent
+                guard let currentDay = weatherData.currentDayData else {
+                    fatalError()
+                }
+                print("%f", (currentDay.main.temp))
+                let tempFormattedString = String(Int((currentDay.main.temp)))
+                let currentWeatherText: String = (currentDay.weather[0].description)
+                let weatherID = currentDay.weather[0].id
+                DispatchQueue.main.async {                     // UI must be changed from main thread otherwise threads contradict each other
+                    let vc = UIApplication.topViewController() as! ViewController   // get main view controller
+                    vc.tempLabel.text = tempFormattedString  + "°"
+                    vc.weatherLabel.text = currentWeatherText
+                    vc.cityLabel.text = currentDay.name            // the city's name
+                    vc.displayAppropriatePhoto(weatherID)           // called last as it loads all the images in
+                }
+            }
+        }
+        weatherReq.getFiveDayWeather { result in         // tell Swift garbage collection if view dismissed -> free memory
+            let vc = UIApplication.topViewController() as! ViewController   // get main view controller
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let weatherFiveDay):
+                DispatchQueue.main.async {                     // Allow to switch now that we have all the data
+                    let vc = UIApplication.topViewController() as! ViewController   // get main view controller
+                    vc.toggleMode.isEnabled = true
+                    vc.toggleUnit.isEnabled = true
+                }
+                
+                vc.weatherData?.fiveDayData = weatherFiveDay
+            }
+        }
+        
+    }
+
     
     
     // make async api request for current weather
