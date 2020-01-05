@@ -52,7 +52,7 @@ class ViewControllerWeekly: UIViewController, UITableViewDelegate, UITableViewDa
         newCell.avg.index = indexPath.row
         
         newCell.weatherIcon.image = displayAppropriateIcon(((WeatherInfo.weatherData.fiveDayData?[indexPath.row].weather[0].id)!))
-        // newCell.dayOfTheWeek.sizeToFit()       // size to display all text
+        //newCell.dayOfTheWeek.sizeToFit()       // size to display all text
         return newCell
     }
     
