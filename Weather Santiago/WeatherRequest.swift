@@ -58,6 +58,9 @@ struct WeatherRequest {
                 let tempFormattedString = String(Int((currentDay.main.temp)))
                 let currentWeatherText: String = (currentDay.weather[0].description)
                 let weatherID = currentDay.weather[0].id
+                // save weather data so app can display while performing next search
+                PreferencesManager.shared.cachedTemp = currentDay.main.temp
+                PreferencesManager.shared.cachedWeather = weatherID
                 DispatchQueue.main.async {                     // UI must be changed from main thread otherwise threads contradict each other
                     let vc = UIApplication.topViewController() as! ViewController   // get main view controller
                     vc.tempLabel.text = tempFormattedString  + "°"

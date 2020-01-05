@@ -24,5 +24,24 @@ class PreferencesManager {
         }
     }
     
+    var cachedTemp: Double {
+        get {
+            return userDefaults.double(forKey: "temp")    // returns 0 if value does not exist
+        }
+        set {
+            userDefaults.set(newValue, forKey: "temp")
+        }
+    }
+    
+    var cachedWeather: Int {
+        get {
+            return userDefaults.integer(forKey: "weatherID") // returns 0 if value does not exist
+        }
+        set {
+            userDefaults.set(newValue, forKey: "weatherID")
+        }
+    }
+    
+    
   
 }

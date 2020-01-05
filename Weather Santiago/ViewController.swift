@@ -88,8 +88,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         default:
             fatalError("Unexpected random value")
         }
-        tempLabel.text = "loading..."
+        if (PreferencesManager.shared.cachedTemp != 0) {                 // is there cached data
+            tempLabel.text = String(Int(PreferencesManager.shared.cachedTemp)) + "°"
+        }
         weatherLabel.text = loadMessage
+        cityLabel.text = "loading fresh data..."
+        if (PreferencesManager.shared.cachedWeather != 0) {                // is there cached data
+            displayAppropriatePhoto(PreferencesManager.shared.cachedWeather)
+        }
     }
     
     // given the weatherID from the JSON; picks, loads, and displays the proper photo
@@ -167,7 +173,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         self.weatherData = WeatherInfo.weatherData
         
         Location.shared.checkLocationPermissions(vc: self)
-        
     }
 
     
