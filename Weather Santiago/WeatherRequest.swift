@@ -68,7 +68,6 @@ struct WeatherRequest {
             }
         }
         weatherReq.getFiveDayWeather { result in         // tell Swift garbage collection if view dismissed -> free memory
-            let vc = UIApplication.topViewController() as! ViewController   // get main view controller
             switch result {
             case .failure(let error):
                 print(error)
@@ -78,8 +77,10 @@ struct WeatherRequest {
                     vc.toggleMode.isEnabled = true
                     vc.toggleUnit.isEnabled = true
                 }
-                
-                vc.weatherData?.fiveDayData = weatherFiveDay
+                DispatchQueue.main.async {                     //  UIApplication acces has to be from the main thread
+                    let vc = UIApplication.topViewController() as! ViewController   // get main view controller
+                    vc.weatherData?.fiveDayData = weatherFiveDay
+                }
             }
         }
         
