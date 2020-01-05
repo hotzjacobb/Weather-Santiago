@@ -5,7 +5,6 @@
 //  Created by Jacob Hotz on 2019-10-06.
 //  Copyright © 2019 Jacob Hotz. All rights reserved.
 //
-
 import Foundation
 import UIKit
 
@@ -18,29 +17,29 @@ struct WeatherRequest {
     let requestURLCurrent: URL
     let requestURLFive: URL
     let apiKey: String = "5ba466f91291902d0245b2d55d0522c1"
-//    let santiagoId = "3871336" // calls are made with the city id; list of cities available on API site openweathermap.org
+    //    let santiagoId = "3871336" // calls are made with the city id; list of cities available on API site openweathermap.org
     let lat: Double    // the user's latitude to make the call with
     let lon: Double    // the user's longitude to make the call with
     let unit: String
-
-
+    
+    
     init(_ unit: WeatherInfo.Temperature, _ lat: Double, _ lon: Double) {
         if (unit == WeatherInfo.Temperature.Celsius) {
-        self.unit = "metric"
-    } else {
-        self.unit = "imperial"
+            self.unit = "metric"
+        } else {
+            self.unit = "imperial"
+        }
+        self.lat = lat
+        self.lon = lon
+        // create string for current weather url lookup
+        let requestStringCurrent: String = "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&units=\(self.unit)&appid=\(apiKey)"
+        guard let createUrlCurrent = URL(string: requestStringCurrent) else {fatalError()}
+        requestURLCurrent = createUrlCurrent
+        // create string for five-day weather url lookup
+        let requestStringFive: String = "https://api.openweathermap.org/data/2.5/forecast?lat=\(lat)&lon=\(lon)&units=\(self.unit)&appid=\(apiKey)"
+        guard let createUrlFive = URL(string: requestStringFive) else {fatalError()}
+        requestURLFive = createUrlFive
     }
-    self.lat = lat
-    self.lon = lon
-    // create string for current weather url lookup
-    let requestStringCurrent: String = "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&units=\(self.unit)&appid=\(apiKey)"
-    guard let createUrlCurrent = URL(string: requestStringCurrent) else {fatalError()}
-    requestURLCurrent = createUrlCurrent
-    // create string for five-day weather url lookup
-    let requestStringFive: String = "https://api.openweathermap.org/data/2.5/forecast?lat=\(lat)&lon=\(lon)&units=\(self.unit)&appid=\(apiKey)"
-    guard let createUrlFive = URL(string: requestStringFive) else {fatalError()}
-    requestURLFive = createUrlFive
-}
     
     // Calls the function to make API req. and handles the callback
     static func weatherHandlerHelper(lat: Double, lon: Double, weatherData: WeatherInfo) {
@@ -88,7 +87,7 @@ struct WeatherRequest {
         }
         
     }
-
+    
     
     
     // make async api request for current weather
@@ -110,7 +109,7 @@ struct WeatherRequest {
                 completion(.failure(NSError(domain: "parsingFailure", code: 1, userInfo: nil)))
             }
             
-    }
+        }
         fetchWeatherCurrent.resume()
     }
     
@@ -121,7 +120,7 @@ struct WeatherRequest {
                 return
             }
             do {
-//                let jsonResp = try JSONSerialization.jsonObject(with: jsonDataDaily, options: [])
+                //                let jsonResp = try JSONSerialization.jsonObject(with: jsonDataDaily, options: [])
                 let decoder = JSONDecoder()
                 let weatherResponse = try decoder.decode(FiveDayDataWrapper.self, from: jsonDataDaily)
                 var weatherList = weatherResponse.list
@@ -137,4 +136,3 @@ struct WeatherRequest {
     }
     
 }
-

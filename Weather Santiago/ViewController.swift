@@ -53,7 +53,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         switch (tempMode) {
             
         case .Farenheit:                                            // switch to Farenheit
-            self.weatherData!.currentDayData!.main.temp =                        self.weatherData!.currentDayData!.main.temp * (9/5) + 32
+            self.weatherData!.currentDayData!.main.temp = self.weatherData!.currentDayData!.main.temp * (9/5) + 32
             
            self.weatherData!.fiveDayData = self.weatherData!.fiveDayData!.map(weatherData!.celsiusToFarenheit)
             
@@ -67,7 +67,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         guard let weatherDataToSend: WeatherInfo = weatherData else {
             fatalError("Weather Data not instantiated")
         }
-        print(self.weatherData!.currentDayData!.main.temp)
+        PreferencesManager.shared.cachedTemp = self.weatherData!.currentDayData!.main.temp  // save new temp for when app reopended
         toggleUnit.notifyObservers(toggleUnit.observers, weatherDataToSend)
     }
     

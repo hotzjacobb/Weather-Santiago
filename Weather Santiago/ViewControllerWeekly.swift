@@ -187,6 +187,7 @@ class ViewControllerWeekly: UIViewController, UITableViewDelegate, UITableViewDa
             fatalError("Weather Data not instantiated")
         }
         print(self.weatherData!.currentDayData!.main.temp)
+        PreferencesManager.shared.cachedTemp = self.weatherData!.currentDayData!.main.temp  // save new temp for when app reopended
         toggleUnit.notifyObservers(toggleUnit.observers, weatherDataToSend)
     }
     
