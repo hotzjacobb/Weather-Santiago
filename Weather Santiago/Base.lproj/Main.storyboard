@@ -35,7 +35,7 @@
                                             <action selector="switchUnits:" destination="BYZ-38-t0r" eventType="valueChanged" id="7z2-XB-0ss"/>
                                         </connections>
                                     </segmentedControl>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M9L-DP-ha9">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M9L-DP-ha9">
                                         <rect key="frame" x="372" y="0.0" width="22" height="28"/>
                                         <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <connections>
@@ -101,6 +101,7 @@
                     <navigationItem key="navigationItem" title="Weather Santiago" id="w3w-gF-LfQ"/>
                     <connections>
                         <outlet property="cityLabel" destination="IAI-y3-U8t" id="RGn-5l-ldP"/>
+                        <outlet property="infoButton" destination="M9L-DP-ha9" id="fy4-nA-TSL"/>
                         <outlet property="tempLabel" destination="Anq-4i-mbl" id="gcB-lg-gcE"/>
                         <outlet property="toggleMode" destination="CEc-Je-5XD" id="08R-Vi-WCd"/>
                         <outlet property="toggleUnit" destination="gBZ-AS-F4Y" id="JOp-2z-pJX"/>
@@ -313,6 +314,6 @@
         <image name="fabian-grohs-XMFZqrGyV-Q-unsplash" width="5057" height="3911"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ODV-IT-3Hb"/>
+        <segue reference="5Ub-Ng-AVx"/>
     </inferredMetricsTieBreakers>
 </document>

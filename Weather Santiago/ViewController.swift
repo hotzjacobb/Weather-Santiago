@@ -18,8 +18,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var tempLabel: UILabelObserver!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var toggleMode: UIButton!
-    
-  
+    @IBOutlet weak var infoButton: UIButton!
     @IBOutlet weak var toggleUnit: UISegmentedControlObservable!
     
     
@@ -50,6 +49,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             fatalError("Unexpected toggleUnit.selectedSegmentIndex value")
         }
         PreferencesManager.shared.currentTempUnit = tempMode
+        print(toggleUnit.selectedSegmentIndex)
         switch (tempMode) {
             
         case .Farenheit:                                            // switch to Farenheit

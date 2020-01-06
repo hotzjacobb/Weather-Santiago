@@ -168,6 +168,10 @@ class ViewControllerWeekly: UIViewController, UITableViewDelegate, UITableViewDa
             fatalError("Unexpected toggleUnit.selectedSegmentIndex value")
         }
         PreferencesManager.shared.currentTempUnit = tempMode
+        print(tempMode)
+        print(tempMode)
+        print(tempMode)
+        print(tempMode)
         switch (tempMode) {                  // switch to Farenheit
             
         case .Farenheit:
