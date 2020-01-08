@@ -479,7 +479,7 @@
 		7F5AE8B7233C3E9E00567EB1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LUN6SJ3R4F;
 				INFOPLIST_FILE = "Weather Santiago/Info.plist";
@@ -490,14 +490,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Jacob-Hotz.Weather-Santiago";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		7F5AE8B8233C3E9E00567EB1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LUN6SJ3R4F;
 				INFOPLIST_FILE = "Weather Santiago/Info.plist";
@@ -508,7 +508,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Jacob-Hotz.Weather-Santiago";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
