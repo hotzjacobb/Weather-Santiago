@@ -98,7 +98,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="w3w-gF-LfQ"/>
+                    <navigationItem key="navigationItem" title="Current" id="w3w-gF-LfQ"/>
                     <connections>
                         <outlet property="cityLabel" destination="IAI-y3-U8t" id="RGn-5l-ldP"/>
                         <outlet property="infoButton" destination="M9L-DP-ha9" id="fy4-nA-TSL"/>
@@ -150,7 +150,7 @@
             </objects>
             <point key="canvasLocation" x="1385.5072463768117" y="-656.25"/>
         </scene>
-        <!--View Controller Weekly-->
+        <!--Weekly-->
         <scene sceneID="o1Y-DG-g9O">
             <objects>
                 <viewController id="PIN-sD-P0e" customClass="ViewControllerWeekly" customModule="Weather_Santiago" customModuleProvider="target" sceneMemberID="viewController">
@@ -281,7 +281,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="268-Ti-Xfy"/>
                     </view>
-                    <navigationItem key="navigationItem" id="8bH-dq-zeM"/>
+                    <navigationItem key="navigationItem" title="Weekly" id="8bH-dq-zeM"/>
                     <connections>
                         <outlet property="tableView" destination="1uG-g8-dyV" id="NSz-zn-yX3"/>
                         <outlet property="toggleUnit" destination="ZGU-DP-eIv" id="3EI-2M-ivP"/>
