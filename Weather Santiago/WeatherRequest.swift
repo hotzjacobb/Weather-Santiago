@@ -78,7 +78,7 @@ struct WeatherRequest {
                     let vc = UIApplication.topViewController() as! ViewController   // get main view controller
                     vc.toggleMode.isEnabled = true
                     vc.toggleUnit.isEnabled = true
-                    vc.infoButton.isEnabled = true             // as of now removing this and enabling button breaks the code as topViewController needs to be slightly altered
+                    vc.infoButton.isEnabled = true             // as of now removing this and enabling button initially breaks the code as topViewController needs to be slightly altered
                 }
                 DispatchQueue.main.async {                     //  UIApplication acces has to be from the main thread
                     let vc = UIApplication.topViewController() as! ViewController   // get main view controller

@@ -98,7 +98,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Weather Santiago" id="w3w-gF-LfQ"/>
+                    <navigationItem key="navigationItem" id="w3w-gF-LfQ"/>
                     <connections>
                         <outlet property="cityLabel" destination="IAI-y3-U8t" id="RGn-5l-ldP"/>
                         <outlet property="infoButton" destination="M9L-DP-ha9" id="fy4-nA-TSL"/>
@@ -124,7 +124,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X4I-mq-2bc">
                                 <rect key="frame" x="20" y="108" width="374" height="754"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">Weather Santiago was created by Jacob Hotz. When not behind a computer, you can find Jacob cooking, TAing, or running. Jacob's currently on exchange in Santiago, Chile. Jacob would like to thank Alec Cooks, Andrew Neel, Annie Spratt, Ben Sauer, Benjamin Parker, Clint Mckoy, Danielle Dolson, Aissa Daoudi, Jakob Owens, Joonas Slid, Nick Nice, Ronald Yang, Fabian Grohs, Sakib Sadman and Sean Pierce. Those folks took the lovely photos that this app uses. Their work can be found on the site Unsplash. Jacob would also like to thank his friend Andrea Gottardo for his support.</string>
+                                <mutableString key="text">Weather Santiago was created by Jacob Hotz. When not behind a computer, you can find Jacob cooking, TAing, or running. Jacob's currently on exchange in Santiago, Chile. Jacob would like to thank Alec Cooks, Andrew Neel, Annie Spratt, Ben Sauer, Benjamin Parker, Clint Mckoy, Danielle Dolson, Aissa Daoudi, Jakob Owens, Joonas Slid, Nick Nice, Ronald Yang, Fabian Grohs, Sakib Sadman and Sean Pierce. Those folks took the lovely photos that this app uses. Their work can be found on the site Unsplash. The app icon was designed by Freepik from www.flaticon.com. Jacob would also like to thank his friend Andrea Gottardo for his support.</mutableString>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -150,7 +150,7 @@
             </objects>
             <point key="canvasLocation" x="1385.5072463768117" y="-656.25"/>
         </scene>
-        <!--Weather Santiago-->
+        <!--View Controller Weekly-->
         <scene sceneID="o1Y-DG-g9O">
             <objects>
                 <viewController id="PIN-sD-P0e" customClass="ViewControllerWeekly" customModule="Weather_Santiago" customModuleProvider="target" sceneMemberID="viewController">
@@ -281,7 +281,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="268-Ti-Xfy"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Weather Santiago" id="8bH-dq-zeM"/>
+                    <navigationItem key="navigationItem" id="8bH-dq-zeM"/>
                     <connections>
                         <outlet property="tableView" destination="1uG-g8-dyV" id="NSz-zn-yX3"/>
                         <outlet property="toggleUnit" destination="ZGU-DP-eIv" id="3EI-2M-ivP"/>
@@ -314,6 +314,6 @@
         <image name="fabian-grohs-XMFZqrGyV-Q-unsplash" width="5057" height="3911"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5Ub-Ng-AVx"/>
+        <segue reference="ODV-IT-3Hb"/>
     </inferredMetricsTieBreakers>
 </document>
