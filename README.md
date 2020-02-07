@@ -1,7 +1,9 @@
 # Weather-Santiago
 
 <img src="https://i.imgur.com/J4sAXXI.png" width="150"/>
+
 <br><br>
+
 <img src="https://i.imgur.com/RYB6Tyn.jpg" width="275"/> &nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/8skNoD7.jpg" width="275"/> &nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/sqhNRSp.png" width="275"/>
 
 
