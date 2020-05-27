@@ -11,6 +11,6 @@ Wista is a stylish minimalistic weather app that quickly gets you the informatio
 
 I make calls to the [OpenWeather API](https://openweathermap.org) for weather data. 
 
-![Available on the app store](https://cdn.worldvectorlogo.com/logos/download-on-the-app-store-apple.svg)
+[<img src="https://cdn.worldvectorlogo.com/logos/download-on-the-app-store-apple.svg">](https://apps.apple.com/ca/app/wista/id1494067759)
 
 
